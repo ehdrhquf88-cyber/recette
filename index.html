@@ -15,311 +15,192 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600&family=Playfair+Display:wght@400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg:        #F7F3EE;
-  --sidebar:   #1C1A17;
-  --surface:   #FFFFFF;
-  --surface2:  #F2EDE6;
-  --border:    #E4DDD4;
-  --border2:   #C9BFB3;
-  --text:      #1C1A17;
-  --text2:     #6B6358;
-  --text3:     #A89E93;
-  --accent:    #3D6B4F;
-  --accent-lt: #EAF2EC;
-  --accent-dk: #2A4D38;
-  --warm:      #C17F3A;
-  --teal:      #2E7D72;
-  --teal-lt:   #E6F4F2;
-  --teal-bd:   #A8D5CF;
-  --danger:    #C0392B;
-  --radius:    6px;
-  --radius-lg: 12px;
-  --safe-top: env(safe-area-inset-top, 0px);
-  --safe-bot: env(safe-area-inset-bottom, 0px);
+  --bg:#F7F3EE; --sidebar:#1C1A17; --surface:#FFFFFF; --surface2:#F2EDE6;
+  --border:#E4DDD4; --border2:#C9BFB3; --text:#1C1A17; --text2:#6B6358; --text3:#A89E93;
+  --accent:#3D6B4F; --accent-lt:#EAF2EC; --accent-dk:#2A4D38;
+  --warm:#C17F3A; --teal:#2E7D72; --teal-lt:#E6F4F2; --teal-bd:#A8D5CF;
+  --danger:#C0392B; --radius:6px; --radius-lg:12px;
+  --sat: env(safe-area-inset-top,0px);
+  --sab: env(safe-area-inset-bottom,0px);
 }
-* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-html { height: 100%; }
-body {
-  font-family: 'Noto Sans KR', sans-serif;
-  background: var(--bg); color: var(--text);
-  height: 100%; overflow: hidden;
-  display: flex; flex-direction: column;
-}
-input[type=number] { -moz-appearance: textfield; appearance: textfield; }
-input[type=number]::-webkit-inner-spin-button,
-input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; }
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+html,body{height:100%;overflow:hidden;}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--text);display:flex;flex-direction:column;}
+input[type=number]{-moz-appearance:textfield;appearance:textfield;}
+input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;}
 
-/* ════════════════════════════════
-   DESKTOP LAYOUT  (≥ 700px)
-════════════════════════════════ */
-.app {
-  display: flex; flex: 1; overflow: hidden;
-  height: 100%;
-}
+/* ─── DESKTOP (≥700px) ─── */
+.desktop-app{display:flex;flex:1;overflow:hidden;height:100%;}
+.sidebar{width:268px;min-width:268px;background:var(--sidebar);display:flex;flex-direction:column;height:100%;overflow:hidden;}
+.sidebar-header{padding:calc(26px + var(--sat)) 22px 18px;border-bottom:1px solid rgba(255,255,255,0.07);}
+.sidebar-brand{display:flex;align-items:center;gap:10px;margin-bottom:3px;}
+.brand-icon{width:34px;height:34px;background:linear-gradient(135deg,#C17F3A,#A0601E);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;}
+.brand-name{font-family:'Playfair Display',serif;font-size:17px;color:#fff;}
+.brand-sub{font-size:10px;color:rgba(255,255,255,0.28);letter-spacing:0.1em;text-transform:uppercase;padding-left:44px;margin-top:1px;}
+.sidebar-new{margin:14px 16px 0;width:calc(100% - 32px);padding:10px;background:var(--accent);color:#fff;border:none;border-radius:var(--radius);font-family:'Noto Sans KR',sans-serif;font-size:13px;font-weight:500;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px;}
+.sidebar-new:hover{background:var(--accent-dk);}
+.sidebar-search{display:block;margin:10px 16px 0;width:calc(100% - 32px);padding:8px 11px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.09);border-radius:var(--radius);font-family:'Noto Sans KR',sans-serif;font-size:12px;color:rgba(255,255,255,0.65);outline:none;}
+.sidebar-search::placeholder{color:rgba(255,255,255,0.22);}
+.recipe-list{flex:1;overflow-y:auto;padding:6px 0;}
+.recipe-list::-webkit-scrollbar{width:3px;}
+.recipe-list::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.08);border-radius:2px;}
+.recipe-item{padding:10px 22px;cursor:pointer;border-left:2px solid transparent;transition:all 0.12s;}
+.recipe-item:hover{background:rgba(255,255,255,0.05);}
+.recipe-item.active{background:rgba(61,107,79,0.22);border-left-color:#5fa875;}
+.recipe-item-name{font-size:13px;font-weight:500;color:rgba(255,255,255,0.78);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.recipe-item.active .recipe-item-name{color:#fff;}
+.recipe-item-meta{font-size:10px;color:rgba(255,255,255,0.28);margin-top:2px;}
+.sidebar-empty{padding:28px 22px;font-size:12px;color:rgba(255,255,255,0.2);text-align:center;line-height:1.7;}
+.sidebar-footer{padding:12px 22px;border-top:1px solid rgba(255,255,255,0.07);font-size:10px;color:rgba(255,255,255,0.18);}
+.d-main{flex:1;overflow-y:auto;padding:36px 42px;background:var(--bg);}
+.d-main::-webkit-scrollbar{width:5px;}
+.d-main::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px;}
+.empty-state{display:flex;flex-direction:column;align-items:center;justify-content:center;height:64vh;text-align:center;gap:10px;}
+.empty-icon{font-size:54px;opacity:0.2;}
+.empty-title{font-family:'Playfair Display',serif;font-size:20px;color:var(--text2);}
+.empty-desc{font-size:13px;color:var(--text3);}
 
-/* ── Sidebar ── */
-.sidebar {
-  width: 268px; min-width: 268px;
-  background: var(--sidebar);
-  display: flex; flex-direction: column;
-  height: 100%; overflow: hidden;
-}
-.sidebar-header {
-  padding: calc(26px + var(--safe-top)) 22px 18px;
-  border-bottom: 1px solid rgba(255,255,255,0.07);
-}
-.sidebar-brand { display: flex; align-items: center; gap: 10px; margin-bottom: 3px; }
-.brand-icon {
-  width: 34px; height: 34px;
-  background: linear-gradient(135deg, #C17F3A, #A0601E);
-  border-radius: 9px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 17px; flex-shrink: 0;
-}
-.brand-name { font-family: 'Playfair Display', serif; font-size: 17px; color: #fff; }
-.brand-sub { font-size: 10px; color: rgba(255,255,255,0.28); letter-spacing: 0.1em; text-transform: uppercase; padding-left: 44px; margin-top: 1px; }
-.sidebar-new {
-  margin: 14px 16px 0; width: calc(100% - 32px); padding: 10px;
-  background: var(--accent); color: #fff; border: none; border-radius: var(--radius);
-  font-family: 'Noto Sans KR', sans-serif; font-size: 13px; font-weight: 500;
-  cursor: pointer; transition: background 0.15s;
-  display: flex; align-items: center; justify-content: center; gap: 7px;
-}
-.sidebar-new:hover, .sidebar-new:active { background: var(--accent-dk); }
-.sidebar-search {
-  display: block; margin: 10px 16px 0; width: calc(100% - 32px);
-  padding: 8px 11px;
-  background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.09);
-  border-radius: var(--radius);
-  font-family: 'Noto Sans KR', sans-serif; font-size: 12px; color: rgba(255,255,255,0.65);
-  outline: none;
-}
-.sidebar-search::placeholder { color: rgba(255,255,255,0.22); }
-.sidebar-search:focus { border-color: rgba(255,255,255,0.28); }
-.recipe-list { flex: 1; overflow-y: auto; padding: 6px 0; }
-.recipe-list::-webkit-scrollbar { width: 3px; }
-.recipe-list::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 2px; }
-.recipe-item { padding: 10px 22px; cursor: pointer; border-left: 2px solid transparent; transition: all 0.12s; }
-.recipe-item:hover { background: rgba(255,255,255,0.05); }
-.recipe-item.active { background: rgba(61,107,79,0.22); border-left-color: #5fa875; }
-.recipe-item-name { font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.78); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.recipe-item.active .recipe-item-name { color: #fff; }
-.recipe-item-meta { font-size: 10px; color: rgba(255,255,255,0.28); margin-top: 2px; }
-.sidebar-empty { padding: 28px 22px; font-size: 12px; color: rgba(255,255,255,0.2); text-align: center; line-height: 1.7; }
-.sidebar-footer { padding: 12px 22px; border-top: 1px solid rgba(255,255,255,0.07); font-size: 10px; color: rgba(255,255,255,0.18); }
+/* ─── MOBILE (< 700px) ─── */
+.mobile-app{display:none;flex-direction:column;flex:1;height:100%;overflow:hidden;position:relative;}
 
-/* ── Main ── */
-.main {
-  flex: 1; overflow-y: auto;
-  padding: 36px 42px;
-  background: var(--bg);
+/* Mobile top bar */
+.m-topbar{
+  background:var(--sidebar);
+  padding:calc(14px + var(--sat)) 16px 12px;
+  display:flex;align-items:center;gap:10px;
+  flex-shrink:0;
+  position:relative;z-index:10;
 }
-.main::-webkit-scrollbar { width: 5px; }
-.main::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
-.empty-state { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 64vh; text-align: center; gap: 10px; }
-.empty-icon { font-size: 54px; opacity: 0.2; }
-.empty-title { font-family: 'Playfair Display', serif; font-size: 20px; color: var(--text2); }
-.empty-desc { font-size: 13px; color: var(--text3); }
-
-/* Recipe top */
-.recipe-top { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 4px; }
-.recipe-name-input {
-  flex: 1; font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 400;
-  color: var(--text); background: transparent; border: none; border-bottom: 1.5px solid transparent;
-  padding: 2px 0 6px; outline: none; transition: border-color 0.2s; width: 100%;
+.m-menu-btn{
+  width:36px;height:36px;background:rgba(255,255,255,0.08);border:none;border-radius:8px;
+  color:#fff;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;
 }
-.recipe-name-input:focus { border-bottom-color: var(--accent); }
-.recipe-name-input::placeholder { color: var(--border2); }
-.delete-btn {
-  margin-top: 8px; padding: 6px 13px; background: transparent;
-  border: 1px solid var(--border2); border-radius: var(--radius);
-  font-family: 'Noto Sans KR', sans-serif; font-size: 11px; color: var(--text3);
-  cursor: pointer; transition: all 0.15s; white-space: nowrap;
+.m-title{font-family:'Playfair Display',serif;font-size:16px;color:#fff;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.m-new-btn{padding:7px 13px;background:var(--accent);color:#fff;border:none;border-radius:var(--radius);font-family:'Noto Sans KR',sans-serif;font-size:12px;font-weight:500;cursor:pointer;white-space:nowrap;flex-shrink:0;}
+.m-del-btn{padding:7px 11px;background:transparent;border:1px solid rgba(255,255,255,0.2);border-radius:var(--radius);color:rgba(255,255,255,0.45);font-family:'Noto Sans KR',sans-serif;font-size:11px;cursor:pointer;white-space:nowrap;flex-shrink:0;}
+
+/* Mobile editor (full screen scroll) */
+.m-editor{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;background:var(--bg);padding:20px 14px calc(20px + var(--sab));}
+
+/* Drawer overlay */
+.drawer-overlay{
+  display:none;position:absolute;inset:0;z-index:50;
+  background:rgba(0,0,0,0.45);
 }
-.delete-btn:hover, .delete-btn:active { border-color: #e08080; color: var(--danger); background: #fff5f5; }
-.save-badge { font-size: 11px; color: var(--accent); height: 18px; margin-bottom: 16px; opacity: 0; transition: opacity 0.3s; }
-.save-badge.show { opacity: 1; }
-
-/* Section label */
-.sec-label { font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); margin-bottom: 8px; }
-
-/* Settings strip */
-.settings-strip { display: flex; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; margin-bottom: 18px; }
-.strip-cell { flex: 1; padding: 14px 18px; border-right: 1px solid var(--border); }
-.strip-cell:last-child { border-right: none; background: var(--surface2); }
-.strip-lbl { font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text3); margin-bottom: 4px; }
-.strip-val { font-family: 'DM Mono', monospace; font-size: 22px; font-weight: 500; color: var(--text); background: transparent; border: none; outline: none; width: 100%; padding: 0; }
-.strip-val:focus { color: var(--accent); }
-.strip-val[readonly] { color: var(--text3); cursor: default; }
-.strip-unit { font-size: 11px; color: var(--text3); margin-top: 2px; }
-
-/* Metrics */
-.metrics { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin-bottom: 24px; }
-.metric { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 14px 16px; position: relative; overflow: hidden; }
-.metric-bar { position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--border); }
-.metric.m-green .metric-bar { background: var(--accent); }
-.metric.m-warm  .metric-bar { background: var(--warm); }
-.metric-lbl { font-size: 10px; color: var(--text3); line-height: 1.5; margin-top: 2px; }
-.metric-num { font-family: 'DM Mono', monospace; font-size: 22px; font-weight: 500; color: var(--text); margin-top: 6px; line-height: 1; }
-.metric.m-green .metric-num { color: var(--accent); }
-.metric.m-warm  .metric-num { color: var(--warm); }
-.metric-u { font-size: 11px; color: var(--text3); margin-left: 1px; }
-
-/* Table */
-.tbl-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; margin-bottom: 12px; }
-.tbl-head { display: grid; grid-template-columns: 88px 1fr 70px 88px 32px; padding: 8px 14px; background: var(--surface2); border-bottom: 1px solid var(--border); }
-.tbl-head span { font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text3); padding: 0 3px; }
-.tbl-head span:nth-child(3), .tbl-head span:nth-child(4) { text-align: right; }
-.ing-row { display: grid; grid-template-columns: 88px 1fr 70px 88px 32px; align-items: center; padding: 3px 14px; border-bottom: 1px solid var(--border); }
-.ing-row:last-of-type { border-bottom: none; }
-.ing-row:hover { background: #FAFAF8; }
-.ic { padding: 0 3px; }
-.sel { width: 100%; padding: 5px 4px; background: transparent; border: none; border-radius: var(--radius); font-family: 'Noto Sans KR', sans-serif; font-size: 12px; color: var(--text2); outline: none; cursor: pointer; }
-.sel:focus { background: var(--surface2); }
-.itxt { width: 100%; padding: 7px 8px; background: transparent; border: none; border-radius: var(--radius); font-family: 'Noto Sans KR', sans-serif; font-size: 14px; color: var(--text); outline: none; }
-.itxt:focus { background: var(--accent-lt); }
-.ipct { width: 100%; padding: 7px 8px; background: transparent; border: none; border-radius: var(--radius); font-family: 'DM Mono', monospace; font-size: 14px; color: var(--text); text-align: right; outline: none; }
-.ipct:focus { background: var(--accent-lt); }
-.ig { font-family: 'DM Mono', monospace; font-size: 13px; color: var(--text2); text-align: right; padding: 0 6px; }
-.xbtn { width: 28px; height: 28px; background: transparent; border: none; border-radius: var(--radius); color: var(--text3); font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.12s; }
-.xbtn:hover, .xbtn:active { background: #FFEEEE; color: var(--danger); }
-.tbl-foot { display: grid; grid-template-columns: 88px 1fr 70px 88px 32px; align-items: center; padding: 10px 14px; background: var(--surface2); border-top: 1.5px solid var(--border2); }
-.foot-lbl { font-size: 11px; font-weight: 600; color: var(--text2); padding: 0 3px; }
-.foot-v { font-family: 'DM Mono', monospace; font-size: 13px; font-weight: 500; color: var(--accent); text-align: right; padding: 0 6px; }
-
-/* Add button */
-.add-btn { width: 100%; padding: 10px; background: transparent; border: 1.5px dashed var(--border2); border-radius: var(--radius-lg); font-family: 'Noto Sans KR', sans-serif; font-size: 13px; color: var(--text3); cursor: pointer; transition: all 0.15s; margin-bottom: 24px; }
-.add-btn:hover, .add-btn:active { border-color: var(--accent); color: var(--accent); background: var(--accent-lt); }
-
-/* Poolish */
-.poolish-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(152px,1fr)); gap: 12px; margin-bottom: 32px; }
-.pc { background: var(--surface); border: 1px solid var(--teal-bd); border-radius: var(--radius-lg); overflow: hidden; }
-.pc-top { background: var(--teal-lt); padding: 14px 16px 10px; border-bottom: 1px solid var(--teal-bd); }
-.pc-name { font-size: 11px; font-weight: 600; color: var(--teal); letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 5px; }
-.pc-total { font-family: 'DM Mono', monospace; font-size: 22px; font-weight: 500; color: var(--teal); line-height: 1; }
-.pc-total span { font-size: 12px; opacity: 0.55; margin-left: 2px; }
-.pc-breakdown { font-size: 11px; color: var(--teal); opacity: 0.6; margin-top: 5px; }
-.pc-bot { padding: 10px 16px; display: flex; align-items: center; gap: 8px; }
-.pc-lbl { font-size: 11px; color: var(--text3); white-space: nowrap; }
-.pc-input { flex: 1; min-width: 0; padding: 5px 8px; background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius); font-family: 'DM Mono', monospace; font-size: 14px; color: var(--teal); text-align: right; outline: none; -moz-appearance: textfield; appearance: textfield; }
-.pc-input::-webkit-inner-spin-button, .pc-input::-webkit-outer-spin-button { -webkit-appearance: none; }
-.pc-input:focus { border-color: var(--teal); background: var(--teal-lt); }
-.pc-pct { font-size: 12px; color: var(--text3); }
-
-/* ════════════════════════════════
-   MOBILE LAYOUT  (< 700px)
-════════════════════════════════ */
-/* Mobile nav bar */
-.mobile-nav {
-  display: none;
-  background: var(--sidebar);
-  padding: 0 0 var(--safe-bot);
-  border-top: 1px solid rgba(255,255,255,0.08);
-  flex-shrink: 0;
-  z-index: 100;
+.drawer-overlay.open{display:block;}
+.drawer{
+  position:absolute;top:0;left:0;bottom:0;width:82%;max-width:320px;
+  background:var(--sidebar);
+  display:flex;flex-direction:column;
+  transform:translateX(-100%);
+  transition:transform 0.26s cubic-bezier(0.4,0,0.2,1);
+  overflow:hidden;
 }
-.mobile-nav-inner {
-  display: flex;
-}
-.nav-tab {
-  flex: 1; padding: 12px 8px 10px;
-  background: transparent; border: none;
-  display: flex; flex-direction: column; align-items: center; gap: 3px;
-  cursor: pointer; transition: background 0.12s;
-}
-.nav-tab:active { background: rgba(255,255,255,0.05); }
-.nav-tab-icon { font-size: 20px; line-height: 1; }
-.nav-tab-label { font-size: 10px; color: rgba(255,255,255,0.4); font-family: 'Noto Sans KR', sans-serif; }
-.nav-tab.active .nav-tab-label { color: #5fa875; }
-.nav-tab.active .nav-tab-icon { filter: none; }
+.drawer-overlay.open .drawer{transform:translateX(0);}
+.drawer-header{padding:calc(20px + var(--sat)) 20px 16px;border-bottom:1px solid rgba(255,255,255,0.07);}
+.drawer-brand{display:flex;align-items:center;gap:10px;margin-bottom:3px;}
+.drawer-brand-icon{width:30px;height:30px;background:linear-gradient(135deg,#C17F3A,#A0601E);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;}
+.drawer-brand-name{font-family:'Playfair Display',serif;font-size:16px;color:#fff;}
+.drawer-search{margin:10px 0 0;padding:8px 11px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.09);border-radius:var(--radius);font-family:'Noto Sans KR',sans-serif;font-size:13px;color:rgba(255,255,255,0.65);outline:none;width:100%;}
+.drawer-search::placeholder{color:rgba(255,255,255,0.22);}
+.drawer-list{flex:1;overflow-y:auto;padding:6px 0;}
+.drawer-item{padding:12px 20px;cursor:pointer;border-left:2px solid transparent;transition:all 0.1s;}
+.drawer-item:active{background:rgba(255,255,255,0.05);}
+.drawer-item.active{background:rgba(61,107,79,0.22);border-left-color:#5fa875;}
+.drawer-item-name{font-size:14px;font-weight:500;color:rgba(255,255,255,0.8);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.drawer-item.active .drawer-item-name{color:#fff;}
+.drawer-item-meta{font-size:11px;color:rgba(255,255,255,0.28);margin-top:2px;}
+.drawer-empty{padding:28px 20px;font-size:13px;color:rgba(255,255,255,0.2);text-align:center;line-height:1.7;}
+.drawer-footer{padding:12px 20px;border-top:1px solid rgba(255,255,255,0.07);font-size:10px;color:rgba(255,255,255,0.18);}
 
-/* Mobile panel system */
-.mobile-panel {
-  display: none;
-  flex: 1; overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-}
+/* ─── SHARED EDITOR STYLES ─── */
+.recipe-top{display:flex;align-items:flex-start;gap:12px;margin-bottom:4px;}
+.recipe-name-input{flex:1;font-family:'Playfair Display',serif;font-size:26px;font-weight:400;color:var(--text);background:transparent;border:none;border-bottom:1.5px solid transparent;padding:2px 0 6px;outline:none;transition:border-color 0.2s;width:100%;}
+.recipe-name-input:focus{border-bottom-color:var(--accent);}
+.recipe-name-input::placeholder{color:var(--border2);}
+.delete-btn{margin-top:8px;padding:6px 13px;background:transparent;border:1px solid var(--border2);border-radius:var(--radius);font-family:'Noto Sans KR',sans-serif;font-size:11px;color:var(--text3);cursor:pointer;white-space:nowrap;}
+.delete-btn:active{border-color:#e08080;color:var(--danger);background:#fff5f5;}
+.save-badge{font-size:11px;color:var(--accent);height:18px;margin-bottom:14px;opacity:0;transition:opacity 0.3s;}
+.save-badge.show{opacity:1;}
+.sec-label{font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--text3);margin-bottom:8px;}
+.settings-strip{display:flex;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;margin-bottom:16px;}
+.strip-cell{flex:1;padding:13px 14px;border-right:1px solid var(--border);}
+.strip-cell:last-child{border-right:none;background:var(--surface2);}
+.strip-lbl{font-size:10px;font-weight:600;letter-spacing:0.07em;text-transform:uppercase;color:var(--text3);margin-bottom:3px;}
+.strip-val{font-family:'DM Mono',monospace;font-size:20px;font-weight:500;color:var(--text);background:transparent;border:none;outline:none;width:100%;padding:0;}
+.strip-val:focus{color:var(--accent);}
+.strip-val[readonly]{color:var(--text3);cursor:default;}
+.strip-unit{font-size:11px;color:var(--text3);margin-top:2px;}
+.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:20px;}
+.metric{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:12px 14px;position:relative;overflow:hidden;}
+.metric-bar{position:absolute;top:0;left:0;right:0;height:3px;background:var(--border);}
+.metric.m-green .metric-bar{background:var(--accent);}
+.metric.m-warm .metric-bar{background:var(--warm);}
+.metric-lbl{font-size:9px;color:var(--text3);line-height:1.5;}
+.metric-num{font-family:'DM Mono',monospace;font-size:20px;font-weight:500;color:var(--text);margin-top:4px;line-height:1;}
+.metric.m-green .metric-num{color:var(--accent);}
+.metric.m-warm .metric-num{color:var(--warm);}
+.metric-u{font-size:10px;color:var(--text3);margin-left:1px;}
+.tbl-wrap{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;margin-bottom:10px;}
+.tbl-head{display:grid;grid-template-columns:76px 1fr 58px 76px 28px;padding:7px 12px;background:var(--surface2);border-bottom:1px solid var(--border);}
+.tbl-head span{font-size:9px;font-weight:600;letter-spacing:0.07em;text-transform:uppercase;color:var(--text3);padding:0 3px;}
+.tbl-head span:nth-child(3),.tbl-head span:nth-child(4){text-align:right;}
+.ing-row{display:grid;grid-template-columns:76px 1fr 58px 76px 28px;align-items:center;padding:2px 12px;border-bottom:1px solid var(--border);}
+.ing-row:last-of-type{border-bottom:none;}
+.ic{padding:0 2px;}
+.sel{width:100%;padding:5px 3px;background:transparent;border:none;border-radius:var(--radius);font-family:'Noto Sans KR',sans-serif;font-size:12px;color:var(--text2);outline:none;cursor:pointer;}
+.sel:focus{background:var(--surface2);}
+.itxt{width:100%;padding:8px 7px;background:transparent;border:none;border-radius:var(--radius);font-family:'Noto Sans KR',sans-serif;font-size:14px;color:var(--text);outline:none;}
+.itxt:focus{background:var(--accent-lt);}
+.ipct{width:100%;padding:8px 7px;background:transparent;border:none;border-radius:var(--radius);font-family:'DM Mono',monospace;font-size:14px;color:var(--text);text-align:right;outline:none;}
+.ipct:focus{background:var(--accent-lt);}
+.ig{font-family:'DM Mono',monospace;font-size:12px;color:var(--text2);text-align:right;padding:0 5px;}
+.xbtn{width:26px;height:26px;background:transparent;border:none;border-radius:var(--radius);color:var(--text3);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.xbtn:active{background:#FFEEEE;color:var(--danger);}
+.tbl-foot{display:grid;grid-template-columns:76px 1fr 58px 76px 28px;align-items:center;padding:9px 12px;background:var(--surface2);border-top:1.5px solid var(--border2);}
+.foot-lbl{font-size:11px;font-weight:600;color:var(--text2);padding:0 3px;}
+.foot-v{font-family:'DM Mono',monospace;font-size:12px;font-weight:500;color:var(--accent);text-align:right;padding:0 5px;}
+.add-btn{width:100%;padding:10px;background:transparent;border:1.5px dashed var(--border2);border-radius:var(--radius-lg);font-family:'Noto Sans KR',sans-serif;font-size:13px;color:var(--text3);cursor:pointer;margin-bottom:20px;}
+.add-btn:active{border-color:var(--accent);color:var(--accent);background:var(--accent-lt);}
+.poolish-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;margin-bottom:24px;}
+.pc{background:var(--surface);border:1px solid var(--teal-bd);border-radius:var(--radius-lg);overflow:hidden;}
+.pc-top{background:var(--teal-lt);padding:12px 14px 9px;border-bottom:1px solid var(--teal-bd);}
+.pc-name{font-size:10px;font-weight:600;color:var(--teal);letter-spacing:0.05em;text-transform:uppercase;margin-bottom:4px;}
+.pc-total{font-family:'DM Mono',monospace;font-size:20px;font-weight:500;color:var(--teal);line-height:1;}
+.pc-total span{font-size:11px;opacity:0.55;margin-left:2px;}
+.pc-breakdown{font-size:10px;color:var(--teal);opacity:0.6;margin-top:4px;}
+.pc-bot{padding:9px 14px;display:flex;align-items:center;gap:8px;}
+.pc-lbl{font-size:11px;color:var(--text3);white-space:nowrap;}
+.pc-input{flex:1;min-width:0;padding:5px 8px;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);font-family:'DM Mono',monospace;font-size:14px;color:var(--teal);text-align:right;outline:none;-moz-appearance:textfield;appearance:textfield;}
+.pc-input::-webkit-inner-spin-button,.pc-input::-webkit-outer-spin-button{-webkit-appearance:none;}
+.pc-input:focus{border-color:var(--teal);background:var(--teal-lt);}
+.pc-pct{font-size:12px;color:var(--text3);}
 
-/* Mobile list panel */
-.mobile-list-header {
-  background: var(--sidebar);
-  padding: calc(16px + var(--safe-top)) 20px 14px;
-  display: flex; align-items: center; justify-content: space-between;
-  gap: 12px;
+/* desktop overrides */
+@media (min-width:700px){
+  .mobile-app{display:none!important;}
+  .desktop-app{display:flex!important;}
+  .tbl-head{grid-template-columns:88px 1fr 70px 88px 32px;padding:8px 14px;}
+  .ing-row{grid-template-columns:88px 1fr 70px 88px 32px;padding:3px 14px;}
+  .tbl-foot{grid-template-columns:88px 1fr 70px 88px 32px;padding:10px 14px;}
+  .foot-v{font-size:13px;}
+  .metric-num{font-size:22px;}
+  .recipe-name-input{font-size:28px;}
+  .strip-val{font-size:22px;}
+  .metrics{gap:10px;margin-bottom:24px;}
+  .settings-strip .strip-cell{padding:14px 18px;}
+  .poolish-grid{grid-template-columns:repeat(auto-fill,minmax(152px,1fr));}
 }
-.mobile-brand { font-family: 'Playfair Display', serif; font-size: 18px; color: #fff; }
-.mobile-new-btn {
-  padding: 8px 16px; background: var(--accent); color: #fff;
-  border: none; border-radius: var(--radius);
-  font-family: 'Noto Sans KR', sans-serif; font-size: 13px; font-weight: 500;
-  cursor: pointer; white-space: nowrap;
-}
-.mobile-search {
-  margin: 0 16px 8px;
-  padding: 9px 12px; width: calc(100% - 32px);
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: var(--radius); font-family: 'Noto Sans KR', sans-serif;
-  font-size: 14px; color: var(--text); outline: none;
-}
-.mobile-recipe-list { padding: 6px 0; background: var(--bg); min-height: 100%; }
-.mobile-recipe-item {
-  padding: 14px 20px; background: var(--surface); margin: 0 0 1px;
-  cursor: pointer; display: flex; align-items: center; justify-content: space-between;
-  border-left: 3px solid transparent; transition: all 0.1s;
-}
-.mobile-recipe-item.active { border-left-color: var(--accent); background: var(--accent-lt); }
-.mobile-recipe-item:active { background: var(--surface2); }
-.mri-name { font-size: 15px; font-weight: 500; color: var(--text); }
-.mri-meta { font-size: 11px; color: var(--text3); margin-top: 2px; }
-.mri-arrow { font-size: 16px; color: var(--text3); }
-.mobile-empty { padding: 48px 24px; text-align: center; font-size: 14px; color: var(--text3); line-height: 1.7; }
-
-/* Mobile editor panel */
-.mobile-editor-header {
-  background: var(--sidebar);
-  padding: calc(14px + var(--safe-top)) 18px 12px;
-  display: flex; align-items: center; gap: 12px;
-  border-bottom: 1px solid rgba(255,255,255,0.07);
-}
-.back-btn {
-  background: transparent; border: none; color: rgba(255,255,255,0.7);
-  font-size: 22px; cursor: pointer; padding: 2px 4px; line-height: 1;
-}
-.mobile-editor-title { font-family: 'Playfair Display', serif; font-size: 16px; color: #fff; flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.mobile-editor-body { padding: 20px 16px 32px; }
-
-@media (max-width: 699px) {
-  .app { flex-direction: column; }
-  .sidebar { display: none; }
-  .main { display: none; }
-  .mobile-nav { display: block; }
-  .mobile-panel { display: flex; flex-direction: column; }
-
-  /* Tighten up for mobile */
-  .recipe-name-input { font-size: 22px; }
-  .settings-strip { flex-direction: column; }
-  .strip-cell { border-right: none; border-bottom: 1px solid var(--border); }
-  .strip-cell:last-child { border-bottom: none; }
-  .metrics { grid-template-columns: 1fr 1fr; gap: 8px; }
-  .tbl-head { grid-template-columns: 80px 1fr 62px 78px 28px; padding: 7px 12px; }
-  .ing-row { grid-template-columns: 80px 1fr 62px 78px 28px; padding: 2px 12px; }
-  .tbl-foot { grid-template-columns: 80px 1fr 62px 78px 28px; padding: 8px 12px; }
-  .poolish-grid { grid-template-columns: 1fr 1fr; }
-  .mobile-editor-body .sec-label { margin-top: 20px; }
-}
-
-@media (min-width: 700px) {
-  .mobile-nav { display: none !important; }
-  .mobile-panel { display: none !important; }
-  .sidebar { display: flex !important; }
-  .main { display: block !important; }
+@media (max-width:699px){
+  .desktop-app{display:none!important;}
+  .mobile-app{display:flex!important;}
 }
 </style>
 </head>
 <body>
 
 <!-- ══ DESKTOP ══ -->
-<div class="app">
+<div class="desktop-app">
   <aside class="sidebar">
     <div class="sidebar-header">
       <div class="sidebar-brand">
@@ -328,15 +209,12 @@ input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; }
       </div>
       <div class="brand-sub">레시피 계산기</div>
     </div>
-    <button class="sidebar-new" onclick="newRecipe()">
-      <span style="font-size:16px;line-height:1">+</span> 새 레시피
-    </button>
+    <button class="sidebar-new" onclick="newRecipe()"><span style="font-size:16px;line-height:1">+</span> 새 레시피</button>
     <input class="sidebar-search" type="text" placeholder="레시피 검색..." oninput="renderList(this.value)">
     <div class="recipe-list" id="recipe-list"></div>
     <div class="sidebar-footer">데이터는 이 기기에 저장됩니다</div>
   </aside>
-
-  <main class="main" id="main-desktop">
+  <main class="d-main">
     <div class="empty-state" id="empty-state">
       <div class="empty-icon">🌾</div>
       <div class="empty-title">레시피를 선택하세요</div>
@@ -347,312 +225,185 @@ input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; }
 </div>
 
 <!-- ══ MOBILE ══ -->
-<!-- Panel 1: 레시피 목록 -->
-<div class="mobile-panel" id="panel-list">
-  <div class="mobile-list-header">
-    <div class="mobile-brand">🌾 Boulangerie</div>
-    <button class="mobile-new-btn" onclick="newRecipe()">+ 새 레시피</button>
+<div class="mobile-app">
+  <!-- Top bar -->
+  <div class="m-topbar">
+    <button class="m-menu-btn" onclick="openDrawer()" aria-label="레시피 목록">☰</button>
+    <div class="m-title" id="m-title">레시피를 선택하세요</div>
+    <button class="m-del-btn" id="m-del-btn" style="display:none" onclick="deleteCurrent()">삭제</button>
+    <button class="m-new-btn" onclick="newRecipe()">+ 새로</button>
   </div>
-  <input class="mobile-search" type="text" placeholder="레시피 검색..." oninput="renderMobileList(this.value)">
-  <div class="mobile-recipe-list" id="mobile-recipe-list"></div>
-</div>
 
-<!-- Panel 2: 레시피 편집 -->
-<div class="mobile-panel" id="panel-editor" style="display:none;flex-direction:column;">
-  <div class="mobile-editor-header">
-    <button class="back-btn" onclick="mobileBack()">‹</button>
-    <div class="mobile-editor-title" id="mobile-editor-title">레시피</div>
-    <button class="delete-btn" id="mobile-delete-btn" style="font-size:11px;color:rgba(255,255,255,0.5);border-color:rgba(255,255,255,0.2);">삭제</button>
-  </div>
-  <div class="mobile-editor-body" id="editor-mobile" style="flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;"></div>
-</div>
+  <!-- Full-screen editor -->
+  <div class="m-editor" id="editor-mobile"></div>
 
-<!-- Bottom nav -->
-<nav class="mobile-nav">
-  <div class="mobile-nav-inner">
-    <button class="nav-tab active" id="tab-list" onclick="showMobilePanel('list')">
-      <span class="nav-tab-icon">📋</span>
-      <span class="nav-tab-label">레시피 목록</span>
-    </button>
-    <button class="nav-tab" id="tab-editor" onclick="showMobilePanel('editor')" id="tab-editor">
-      <span class="nav-tab-icon">✏️</span>
-      <span class="nav-tab-label">편집</span>
-    </button>
+  <!-- Drawer overlay -->
+  <div class="drawer-overlay" id="drawer-overlay" onclick="closeDrawerIfOutside(event)">
+    <div class="drawer" id="drawer">
+      <div class="drawer-header">
+        <div class="drawer-brand">
+          <div class="drawer-brand-icon">🌾</div>
+          <div class="drawer-brand-name">Boulangerie</div>
+        </div>
+        <input class="drawer-search" type="text" placeholder="검색..." oninput="renderDrawerList(this.value)">
+      </div>
+      <div class="drawer-list" id="drawer-list"></div>
+      <div class="drawer-footer">기기에 저장됩니다</div>
+    </div>
   </div>
-</nav>
+</div>
 
 <script>
-// ══ DATA ══
-const TYPES = ['밀','수분','사전반죽','소금','기타'];
-let recipes = [], currentId = null, saveTimer = null;
+const TYPES=['밀','수분','사전반죽','소금','기타'];
+let recipes=[],currentId=null,saveTimer=null;
 
-function load() {
-  try { recipes = JSON.parse(localStorage.getItem('bakery_recipes') || '[]'); } catch(e) { recipes = []; }
-}
-function save() {
-  localStorage.setItem('bakery_recipes', JSON.stringify(recipes));
-  ['save-indicator','save-indicator-m'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) { el.classList.add('show'); clearTimeout(saveTimer); saveTimer = setTimeout(() => el.classList.remove('show'), 1600); }
+function load(){try{recipes=JSON.parse(localStorage.getItem('bakery_recipes')||'[]');}catch(e){recipes=[];}}
+function save(){
+  localStorage.setItem('bakery_recipes',JSON.stringify(recipes));
+  ['si-d','si-m'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el){el.classList.add('show');clearTimeout(saveTimer);saveTimer=setTimeout(()=>el.classList.remove('show'),1600);}
   });
 }
-function getCurrent() { return recipes.find(r => r.id === currentId); }
+function getCurrent(){return recipes.find(r=>r.id===currentId);}
 
-// ══ MOBILE PANEL ══
-function showMobilePanel(which) {
-  document.getElementById('panel-list').style.display = which==='list' ? 'flex' : 'none';
-  document.getElementById('panel-editor').style.display = which==='editor' ? 'flex' : 'none';
-  document.getElementById('tab-list').classList.toggle('active', which==='list');
-  document.getElementById('tab-editor').classList.toggle('active', which==='editor');
+/* drawer */
+function openDrawer(){document.getElementById('drawer-overlay').classList.add('open');}
+function closeDrawer(){document.getElementById('drawer-overlay').classList.remove('open');}
+function closeDrawerIfOutside(e){if(e.target===document.getElementById('drawer-overlay'))closeDrawer();}
+
+function newRecipe(){
+  const id=Date.now().toString();
+  recipes.unshift({id,name:'새 레시피',weight:500,count:30,productNames:[],poolishHydrations:{},
+    ingredients:[
+      {type:'밀',name:'T80',pct:100},{type:'수분',name:'물',pct:80},
+      {type:'사전반죽',name:'르방',pct:20},{type:'소금',name:'소금',pct:1.8},{type:'기타',name:'꿀',pct:2}
+    ]});
+  save();selectRecipe(id);closeDrawer();
 }
-function mobileBack() { showMobilePanel('list'); }
-
-// ══ RECIPES ══
-function newRecipe() {
-  const id = Date.now().toString();
-  recipes.unshift({
-    id, name: '새 레시피', weight: 500, count: 30,
-    productNames: [], poolishHydrations: {},
-    ingredients: [
-      { type:'밀',       name:'T80',  pct:100 },
-      { type:'수분',     name:'물',   pct:80  },
-      { type:'사전반죽', name:'르방', pct:20  },
-      { type:'소금',     name:'소금', pct:1.8 },
-      { type:'기타',     name:'꿀',   pct:2   },
-    ]
-  });
-  save();
-  selectRecipe(id);
-  renderList();
-  renderMobileList();
-  if (window.innerWidth < 700) showMobilePanel('editor');
-}
-
-function deleteRecipe(id) {
-  if (!confirm('이 레시피를 삭제할까요?')) return;
-  recipes = recipes.filter(r => r.id !== id);
-  if (currentId === id) { currentId = null; renderEditor(); renderMobileEditor(); }
-  save(); renderList(); renderMobileList();
-  if (window.innerWidth < 700) showMobilePanel('list');
-}
-
-function selectRecipe(id) {
-  currentId = id;
-  renderList();
-  renderMobileList();
-  renderEditor();
-  renderMobileEditor();
-}
-
-// ══ DESKTOP LIST ══
-function renderList(query='') {
-  const el = document.getElementById('recipe-list');
-  if (!el) return;
-  const list = recipes.filter(r => r.name.includes(query));
-  if (!list.length) { el.innerHTML = '<div class="sidebar-empty">레시피 없음<br>새 레시피를 만들어보세요</div>'; return; }
-  el.innerHTML = list.map(r => `
-    <div class="recipe-item${r.id===currentId?' active':''}" onclick="selectRecipe('${r.id}')">
-      <div class="recipe-item-name">${escHtml(r.name)||'이름 없음'}</div>
-      <div class="recipe-item-meta">${r.weight}g × ${r.count}개 · 재료 ${r.ingredients.length}종</div>
-    </div>`).join('');
-}
-
-// ══ MOBILE LIST ══
-function renderMobileList(query='') {
-  const el = document.getElementById('mobile-recipe-list');
-  if (!el) return;
-  const list = recipes.filter(r => r.name.includes(query||''));
-  if (!list.length) { el.innerHTML = '<div class="mobile-empty">레시피 없음<br>위의 + 새 레시피를 눌러 시작하세요</div>'; return; }
-  el.innerHTML = list.map(r => `
-    <div class="mobile-recipe-item${r.id===currentId?' active':''}" onclick="selectRecipe('${r.id}');showMobilePanel('editor')">
-      <div>
-        <div class="mri-name">${escHtml(r.name)||'이름 없음'}</div>
-        <div class="mri-meta">${r.weight}g × ${r.count}개 · 재료 ${r.ingredients.length}종</div>
-      </div>
-      <div class="mri-arrow">›</div>
-    </div>`).join('');
-}
-
-// ══ CALC ══
-function calcFlourWeight(r) {
-  const tp = r.ingredients.reduce((s,i) => s+(parseFloat(i.pct)||0), 0);
-  const tw = (parseFloat(r.weight)||0) * (parseInt(r.count)||1);
-  return tp > 0 ? tw/(tp/100) : 0;
-}
-function calcStats(r) {
-  const flourW = calcFlourWeight(r);
-  const totalPct = r.ingredients.reduce((s,i) => s+(parseFloat(i.pct)||0), 0);
-  const ph = r.poolishHydrations||{};
-  const poolishIngs = r.ingredients.filter(i=>i.type==='사전반죽');
-  let pFlour=0, pWater=0;
-  poolishIngs.forEach(ing => {
-    const hyd=parseFloat(ph[ing.name])||100, g=(parseFloat(ing.pct)||0)/100*flourW;
-    pFlour+=g*100/(100+hyd); pWater+=g*hyd/(100+hyd);
-  });
-  const totalFlourG=flourW+pFlour;
-  const mainWaterG=r.ingredients.filter(i=>i.type==='수분').reduce((s,i)=>s+(parseFloat(i.pct)||0)/100*flourW,0);
-  const saltG=r.ingredients.filter(i=>i.type==='소금').reduce((s,i)=>s+(parseFloat(i.pct)||0)/100*flourW,0);
-  const hydration=totalFlourG>0?(mainWaterG+pWater)/totalFlourG*100:0;
-  const saltPct=totalFlourG>0?saltG/totalFlourG*100:0;
-  const totalDough=Math.round(flourW*totalPct/100);
-  return {flourW,totalPct,totalFlourG,hydration,saltPct,totalDough,poolishIngs};
-}
-
-// ══ EDITOR HTML (shared) ══
-function buildEditorHTML(r, saveIndicatorId) {
-  if (!r.poolishHydrations) r.poolishHydrations={};
-  const {flourW,totalPct,totalFlourG,hydration,saltPct,totalDough,poolishIngs}=calcStats(r);
-  const ph=r.poolishHydrations;
-  return `
-    <div class="recipe-top">
-      <input class="recipe-name-input" value="${escHtml(r.name)}" placeholder="레시피 이름"
-        oninput="updateField('name',this.value)">
-    </div>
-    <div id="${saveIndicatorId}" class="save-badge">✓ 저장됨</div>
-
-    <div class="settings-strip">
-      <div class="strip-cell">
-        <div class="strip-lbl">개당 무게</div>
-        <input class="strip-val" type="text" inputmode="numeric" value="${r.weight}"
-          onchange="updateField('weight',parseFloat(this.value)||0);rerender()">
-        <div class="strip-unit">g</div>
-      </div>
-      <div class="strip-cell">
-        <div class="strip-lbl">제품 개수</div>
-        <input class="strip-val" type="text" inputmode="numeric" value="${r.count}"
-          onchange="updateField('count',parseInt(this.value)||1);rerender()">
-        <div class="strip-unit">개</div>
-      </div>
-      <div class="strip-cell">
-        <div class="strip-lbl">총 반죽 무게</div>
-        <input class="strip-val" type="text" value="${totalDough.toLocaleString()}" readonly>
-        <div class="strip-unit">g</div>
-      </div>
-    </div>
-
-    <div class="metrics">
-      <div class="metric m-green">
-        <div class="metric-bar"></div>
-        <div class="metric-lbl">수율 (사전반죽 포함)</div>
-        <div class="metric-num">${hydration.toFixed(1)}<span class="metric-u">%</span></div>
-      </div>
-      <div class="metric m-warm">
-        <div class="metric-bar"></div>
-        <div class="metric-lbl">소금 (사전반죽 포함)</div>
-        <div class="metric-num">${saltPct.toFixed(2)}<span class="metric-u">%</span></div>
-      </div>
-      <div class="metric">
-        <div class="metric-bar"></div>
-        <div class="metric-lbl">총 밀가루 (사전반죽 포함)</div>
-        <div class="metric-num">${Math.round(totalFlourG).toLocaleString()}<span class="metric-u">g</span></div>
-      </div>
-    </div>
-
-    <div class="sec-label">재료 목록</div>
-    <div class="tbl-wrap">
-      <div class="tbl-head">
-        <span>타입</span><span>재료명</span><span>%</span><span>무게(g)</span><span></span>
-      </div>
-      ${r.ingredients.map((ing,idx)=>{
-        const pct=parseFloat(ing.pct)||0;
-        const g=flourW>0?(pct/100)*flourW:0;
-        return `<div class="ing-row">
-          <div class="ic"><select class="sel" onchange="updateIng(${idx},'type',this.value);rerender()">
-            ${TYPES.map(t=>`<option${t===ing.type?' selected':''}>${t}</option>`).join('')}
-          </select></div>
-          <div class="ic"><input class="itxt" value="${escHtml(ing.name)}" placeholder="재료명" oninput="updateIng(${idx},'name',this.value)"></div>
-          <div class="ic"><input class="ipct" type="text" inputmode="decimal" value="${pct}" onchange="updateIng(${idx},'pct',parseFloat(this.value)||0);rerender()"></div>
-          <div class="ic ig">${Math.round(g).toLocaleString()}</div>
-          <div class="ic"><button class="xbtn" onclick="removeIng(${idx})">×</button></div>
-        </div>`;
-      }).join('')}
-      <div class="tbl-foot">
-        <div class="foot-lbl">합계</div><div></div>
-        <div class="foot-v">${totalPct.toFixed(1)}</div>
-        <div class="foot-v">${totalDough.toLocaleString()}</div>
-        <div></div>
-      </div>
-    </div>
-    <button class="add-btn" onclick="addIng()">+ 재료 추가</button>
-
-    ${poolishIngs.length>0?`
-    <div class="sec-label">사전반죽 정보</div>
-    <div class="poolish-grid">
-      ${poolishIngs.map(ing=>{
-        const hyd=parseFloat(ph[ing.name])||100;
-        const totalG=flourW>0?(parseFloat(ing.pct)||0)/100*flourW:0;
-        const fi=totalG*100/(100+hyd), wi=totalG*hyd/(100+hyd);
-        return `<div class="pc">
-          <div class="pc-top">
-            <div class="pc-name">${escHtml(ing.name)}</div>
-            <div class="pc-total">${Math.round(totalG).toLocaleString()}<span>g</span></div>
-            <div class="pc-breakdown">밀 ${Math.round(fi)}g · 물 ${Math.round(wi)}g</div>
-          </div>
-          <div class="pc-bot">
-            <span class="pc-lbl">수율</span>
-            <input class="pc-input" type="text" inputmode="decimal" value="${hyd}"
-              onchange="updatePoolishHyd('${escHtml(ing.name)}',parseFloat(this.value)||100);rerender()">
-            <span class="pc-pct">%</span>
-          </div>
-        </div>`;
-      }).join('')}
-    </div>`:''}
-  `;
-}
-
-// ══ RENDER EDITORS ══
-function renderEditor() {
-  const empty=document.getElementById('empty-state');
-  const editor=document.getElementById('editor-desktop');
-  if (!empty||!editor) return;
-  const r=getCurrent();
-  if (!r) { empty.style.display='flex'; editor.style.display='none'; return; }
-  empty.style.display='none'; editor.style.display='block';
-  editor.innerHTML = buildEditorHTML(r, 'save-indicator');
-}
-
-function renderMobileEditor() {
-  const r=getCurrent();
-  const body=document.getElementById('editor-mobile');
-  const title=document.getElementById('mobile-editor-title');
-  const delBtn=document.getElementById('mobile-delete-btn');
-  if (!body) return;
-  if (!r) { body.innerHTML='<div class="mobile-empty" style="padding:40px 20px;color:var(--text3);text-align:center">레시피를 선택하세요</div>'; return; }
-  if (title) title.textContent = r.name||'레시피';
-  if (delBtn) delBtn.onclick = ()=>deleteRecipe(r.id);
-  body.innerHTML = buildEditorHTML(r, 'save-indicator-m');
-}
-
-function rerender() {
-  save(); renderEditor(); renderMobileEditor(); renderList(); renderMobileList();
-  const r=getCurrent();
-  const title=document.getElementById('mobile-editor-title');
-  if (title&&r) title.textContent=r.name||'레시피';
-}
-
-// ══ MUTATIONS ══
-function escHtml(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
-function updateField(k,v){const r=getCurrent();if(!r)return;r[k]=v;if(k==='name'){renderList();renderMobileList();const t=document.getElementById('mobile-editor-title');if(t)t.textContent=v||'레시피';}save();}
-function updateIng(idx,k,v){const r=getCurrent();if(!r)return;r.ingredients[idx][k]=v;save();}
-function removeIng(idx){const r=getCurrent();if(!r)return;r.ingredients.splice(idx,1);save();renderEditor();renderMobileEditor();}
-function addIng(){
+function deleteCurrent(){
   const r=getCurrent();if(!r)return;
-  r.ingredients.push({type:'기타',name:'',pct:0});
-  save();renderEditor();renderMobileEditor();
-  setTimeout(()=>{const els=document.querySelectorAll('.itxt');if(els.length)els[els.length-1].focus();},50);
+  if(!confirm('이 레시피를 삭제할까요?'))return;
+  recipes=recipes.filter(x=>x.id!==r.id);
+  currentId=null;save();renderAll();
 }
+function deleteRecipe(id){
+  if(!confirm('이 레시피를 삭제할까요?'))return;
+  recipes=recipes.filter(r=>r.id!==id);
+  if(currentId===id)currentId=null;
+  save();renderAll();
+}
+function selectRecipe(id){currentId=id;closeDrawer();renderAll();}
+
+/* list helpers */
+function recipeItemHTML(r,cls,onclick){
+  return `<div class="${cls}${r.id===currentId?' active':''}" onclick="${onclick}('${r.id}')">
+    <div class="${cls}-name">${escHtml(r.name)||'이름 없음'}</div>
+    <div class="${cls}-meta">${r.weight}g × ${r.count}개 · 재료 ${r.ingredients.length}종</div>
+  </div>`;
+}
+function renderList(q=''){
+  const el=document.getElementById('recipe-list');if(!el)return;
+  const list=recipes.filter(r=>r.name.includes(q));
+  el.innerHTML=list.length?list.map(r=>recipeItemHTML(r,'recipe-item','selectRecipe')).join(''):'<div class="sidebar-empty">레시피 없음</div>';
+}
+function renderDrawerList(q=''){
+  const el=document.getElementById('drawer-list');if(!el)return;
+  const list=recipes.filter(r=>r.name.includes(q||''));
+  el.innerHTML=list.length?list.map(r=>`<div class="drawer-item${r.id===currentId?' active':''}" onclick="selectRecipe('${r.id}')">
+    <div class="drawer-item-name">${escHtml(r.name)||'이름 없음'}</div>
+    <div class="drawer-item-meta">${r.weight}g × ${r.count}개 · 재료 ${r.ingredients.length}종</div>
+  </div>`).join(''):'<div class="drawer-empty">레시피 없음<br>+ 새로 버튼으로 만들어보세요</div>';
+}
+
+/* calc */
+function calcFlourWeight(r){
+  const tp=r.ingredients.reduce((s,i)=>s+(parseFloat(i.pct)||0),0);
+  const tw=(parseFloat(r.weight)||0)*(parseInt(r.count)||1);
+  return tp>0?tw/(tp/100):0;
+}
+function calcStats(r){
+  const flourW=calcFlourWeight(r);
+  const totalPct=r.ingredients.reduce((s,i)=>s+(parseFloat(i.pct)||0),0);
+  const ph=r.poolishHydrations||{};
+  const poolishIngs=r.ingredients.filter(i=>i.type==='사전반죽');
+  let pF=0,pW=0;
+  poolishIngs.forEach(ing=>{const hyd=parseFloat(ph[ing.name])||100,g=(parseFloat(ing.pct)||0)/100*flourW;pF+=g*100/(100+hyd);pW+=g*hyd/(100+hyd);});
+  const tF=flourW+pF;
+  const mW=r.ingredients.filter(i=>i.type==='수분').reduce((s,i)=>s+(parseFloat(i.pct)||0)/100*flourW,0);
+  const sG=r.ingredients.filter(i=>i.type==='소금').reduce((s,i)=>s+(parseFloat(i.pct)||0)/100*flourW,0);
+  return{flourW,totalPct,totalFlourG:tF,hydration:tF>0?(mW+pW)/tF*100:0,saltPct:tF>0?sG/tF*100:0,totalDough:Math.round(flourW*totalPct/100),poolishIngs};
+}
+
+function buildEditorHTML(r,siId){
+  if(!r.poolishHydrations)r.poolishHydrations={};
+  const{flourW,totalPct,totalFlourG,hydration,saltPct,totalDough,poolishIngs}=calcStats(r);
+  const ph=r.poolishHydrations;
+  return`<div class="recipe-top">
+    <input class="recipe-name-input" value="${escHtml(r.name)}" placeholder="레시피 이름" oninput="updateField('name',this.value)">
+  </div>
+  <div id="${siId}" class="save-badge">✓ 저장됨</div>
+  <div class="settings-strip">
+    <div class="strip-cell"><div class="strip-lbl">개당 무게</div><input class="strip-val" type="text" inputmode="numeric" value="${r.weight}" onchange="updateField('weight',parseFloat(this.value)||0);rerender()"><div class="strip-unit">g</div></div>
+    <div class="strip-cell"><div class="strip-lbl">제품 개수</div><input class="strip-val" type="text" inputmode="numeric" value="${r.count}" onchange="updateField('count',parseInt(this.value)||1);rerender()"><div class="strip-unit">개</div></div>
+    <div class="strip-cell"><div class="strip-lbl">총 반죽 무게</div><input class="strip-val" type="text" value="${totalDough.toLocaleString()}" readonly><div class="strip-unit">g</div></div>
+  </div>
+  <div class="metrics">
+    <div class="metric m-green"><div class="metric-bar"></div><div class="metric-lbl">수율 (사전반죽 포함)</div><div class="metric-num">${hydration.toFixed(1)}<span class="metric-u">%</span></div></div>
+    <div class="metric m-warm"><div class="metric-bar"></div><div class="metric-lbl">소금 (사전반죽 포함)</div><div class="metric-num">${saltPct.toFixed(2)}<span class="metric-u">%</span></div></div>
+    <div class="metric"><div class="metric-bar"></div><div class="metric-lbl">총 밀가루 (사전반죽 포함)</div><div class="metric-num">${Math.round(totalFlourG).toLocaleString()}<span class="metric-u">g</span></div></div>
+  </div>
+  <div class="sec-label">재료 목록</div>
+  <div class="tbl-wrap">
+    <div class="tbl-head"><span>타입</span><span>재료명</span><span>%</span><span>무게(g)</span><span></span></div>
+    ${r.ingredients.map((ing,idx)=>{const pct=parseFloat(ing.pct)||0,g=flourW>0?(pct/100)*flourW:0;return`<div class="ing-row">
+      <div class="ic"><select class="sel" onchange="updateIng(${idx},'type',this.value);rerender()">${TYPES.map(t=>`<option${t===ing.type?' selected':''}>${t}</option>`).join('')}</select></div>
+      <div class="ic"><input class="itxt" value="${escHtml(ing.name)}" placeholder="재료명" oninput="updateIng(${idx},'name',this.value)"></div>
+      <div class="ic"><input class="ipct" type="text" inputmode="decimal" value="${pct}" onchange="updateIng(${idx},'pct',parseFloat(this.value)||0);rerender()"></div>
+      <div class="ic ig">${Math.round(g).toLocaleString()}</div>
+      <div class="ic"><button class="xbtn" onclick="removeIng(${idx})">×</button></div>
+    </div>`;}).join('')}
+    <div class="tbl-foot"><div class="foot-lbl">합계</div><div></div><div class="foot-v">${totalPct.toFixed(1)}</div><div class="foot-v">${totalDough.toLocaleString()}</div><div></div></div>
+  </div>
+  <button class="add-btn" onclick="addIng()">+ 재료 추가</button>
+  ${poolishIngs.length>0?`<div class="sec-label">사전반죽 정보</div><div class="poolish-grid">${poolishIngs.map(ing=>{
+    const hyd=parseFloat(ph[ing.name])||100,totalG=flourW>0?(parseFloat(ing.pct)||0)/100*flourW:0;
+    const fi=totalG*100/(100+hyd),wi=totalG*hyd/(100+hyd);
+    return`<div class="pc"><div class="pc-top"><div class="pc-name">${escHtml(ing.name)}</div><div class="pc-total">${Math.round(totalG).toLocaleString()}<span>g</span></div><div class="pc-breakdown">밀 ${Math.round(fi)}g · 물 ${Math.round(wi)}g</div></div><div class="pc-bot"><span class="pc-lbl">수율</span><input class="pc-input" type="text" inputmode="decimal" value="${hyd}" onchange="updatePoolishHyd('${escHtml(ing.name)}',parseFloat(this.value)||100);rerender()"><span class="pc-pct">%</span></div></div>`;
+  }).join('')}</div>`:''}`;
+}
+
+function renderAll(){
+  const r=getCurrent();
+  /* desktop */
+  const empty=document.getElementById('empty-state'),ed=document.getElementById('editor-desktop');
+  if(empty&&ed){if(!r){empty.style.display='flex';ed.style.display='none';}else{empty.style.display='none';ed.style.display='block';ed.innerHTML=buildEditorHTML(r,'si-d');}}
+  renderList();
+  /* mobile editor */
+  const mob=document.getElementById('editor-mobile');
+  if(mob){
+    if(!r){mob.innerHTML='<div style="padding:60px 20px;text-align:center;color:var(--text3);font-size:14px;">☰ 버튼으로 레시피를 선택하거나<br><br>+ 새로 버튼으로 만드세요</div>';}
+    else{mob.innerHTML=buildEditorHTML(r,'si-m');}
+  }
+  /* mobile top bar */
+  const mt=document.getElementById('m-title'),mdb=document.getElementById('m-del-btn');
+  if(mt)mt.textContent=r?r.name||'레시피':'레시피를 선택하세요';
+  if(mdb)mdb.style.display=r?'block':'none';
+  renderDrawerList();
+}
+
+function rerender(){save();renderAll();}
+function escHtml(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function updateField(k,v){const r=getCurrent();if(!r)return;r[k]=v;if(k==='name'){const mt=document.getElementById('m-title');if(mt)mt.textContent=v||'레시피';renderList();renderDrawerList();}save();}
+function updateIng(idx,k,v){const r=getCurrent();if(!r)return;r.ingredients[idx][k]=v;save();}
+function removeIng(idx){const r=getCurrent();if(!r)return;r.ingredients.splice(idx,1);save();renderAll();}
+function addIng(){const r=getCurrent();if(!r)return;r.ingredients.push({type:'기타',name:'',pct:0});save();renderAll();setTimeout(()=>{const els=document.querySelectorAll('.itxt');if(els.length)els[els.length-1].focus();},50);}
 function updatePoolishHyd(name,val){const r=getCurrent();if(!r)return;if(!r.poolishHydrations)r.poolishHydrations={};r.poolishHydrations[name]=val;save();}
 
-// ══ INIT ══
-load();
-renderList();
-renderMobileList();
+load();renderAll();
 
-// Register Service Worker
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('sw.js').catch(()=>{});
-  });
+if('serviceWorker' in navigator){
+  window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
 }
 </script>
 </body>
