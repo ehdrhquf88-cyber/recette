@@ -126,6 +126,14 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 .save-badge{font-size:11px;color:var(--accent);height:18px;margin-bottom:14px;opacity:0;transition:opacity 0.3s;}
 .save-badge.show{opacity:1;}
 .sec-label{font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--text3);margin-bottom:8px;}
+.recipe-top{display:flex;align-items:flex-start;gap:12px;margin-bottom:4px;}
+.recipe-name-input{flex:1;font-family:'Playfair Display',serif;font-size:26px;font-weight:400;color:var(--text);background:transparent;border:none;border-bottom:1.5px solid transparent;padding:2px 0 6px;outline:none;transition:border-color 0.2s;width:100%;}
+.recipe-name-input:focus{border-bottom-color:var(--accent);}
+.recipe-name-input::placeholder{color:var(--border2);}
+.delete-btn{margin-top:8px;padding:6px 13px;background:transparent;border:1px solid var(--border2);border-radius:var(--radius);font-family:'Noto Sans KR',sans-serif;font-size:11px;color:var(--text3);cursor:pointer;white-space:nowrap;flex-shrink:0;}
+.delete-btn:hover,.delete-btn:active{border-color:#e08080;color:var(--danger);background:#fff5f5;}
+.save-badge{font-size:11px;color:var(--accent);height:18px;margin-bottom:14px;opacity:0;transition:opacity 0.3s;}
+.save-badge.show{opacity:1;}
 .settings-strip{display:flex;flex-wrap:wrap;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;margin-bottom:16px;}
 .strip-cell{flex:1;min-width:120px;padding:13px 14px;border-right:1px solid var(--border);border-bottom:1px solid var(--border);}
 .strip-cell:last-child{border-right:none;}
@@ -354,8 +362,8 @@ function buildEditorHTML(r,siId){
   <div class="settings-strip">
     <div class="strip-cell"><div class="strip-lbl">개당 무게</div><input class="strip-val" type="text" inputmode="numeric" value="${r.weight}" onchange="updateFieldAndClear('weight',parseFloat(this.value)||0)"><div class="strip-unit">g</div></div>
     <div class="strip-cell"><div class="strip-lbl">제품 개수</div><input class="strip-val" type="text" inputmode="numeric" value="${r.count}" onchange="updateFieldAndClear('count',parseInt(this.value)||1)"><div class="strip-unit">개</div></div>
-    <div class="strip-cell" style="background:var(--surface2)"><div class="strip-lbl">계산된 반죽</div><input class="strip-val" type="text" value="${calcDough.toLocaleString()}" readonly style="color:var(--text3)"><div class="strip-unit">g</div></div>
-    <div class="strip-cell" style="border-left:2px solid var(--accent);background:#f0f7f2"><div class="strip-lbl" style="color:var(--accent)">원하는 반죽량</div><input class="strip-val" type="text" inputmode="numeric" value="${r.targetDough>0?r.targetDough:''}" placeholder="${calcDough.toLocaleString()}" onchange="setTargetDough(this.value)" style="color:var(--accent)"><div class="strip-unit" style="color:var(--accent)">g</div></div>
+    <div class="strip-cell" style="background:var(--surface2)"><div class="strip-lbl">계산된 반죽 총량</div><input class="strip-val" type="text" value="${calcDough.toLocaleString()}" readonly style="color:var(--text3)"><div class="strip-unit">g</div></div>
+    <div class="strip-cell" style="border-left:2px solid var(--accent);background:#f0f7f2"><div class="strip-lbl" style="color:var(--accent)">원하는 반죽 총량</div><input class="strip-val" type="text" inputmode="numeric" value="${r.targetDough>0?r.targetDough:''}" placeholder="${calcDough.toLocaleString()}" onchange="setTargetDough(this.value)" style="color:var(--accent)"><div class="strip-unit" style="color:var(--accent)">g</div></div>
   </div>
   <div class="metrics">
     <div class="metric m-green"><div class="metric-bar"></div><div class="metric-lbl">수율 (사전반죽 포함)</div><div class="metric-num">${hydration.toFixed(1)}<span class="metric-u">%</span></div></div>
