@@ -1,0 +1,25 @@
+{
+  "name": "Boulangerie 레시피 계산기",
+  "short_name": "Boulangerie",
+  "description": "제빵 레시피 베이커스 퍼센트 계산기",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#1C1A17",
+  "theme_color": "#1C1A17",
+  "orientation": "any",
+  "lang": "ko",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
