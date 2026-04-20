@@ -154,7 +154,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 .itxt:focus{background:var(--accent-lt);}
 .ipct{width:100%;padding:8px 7px;background:transparent;border:none;border-radius:var(--radius);font-family:'DM Mono',monospace;font-size:14px;color:var(--text);text-align:right;outline:none;}
 .ipct:focus{background:var(--accent-lt);}
-.ig{font-family:'DM Mono',monospace;font-size:12px;color:var(--text2);text-align:right;padding:0 5px;}
+.ig{font-family:'DM Mono',monospace;font-size:18px;font-weight:600;color:var(--text);text-align:right;padding:0 5px;line-height:1;}
 .xbtn{width:26px;height:26px;background:transparent;border:none;border-radius:var(--radius);color:var(--text3);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
 .xbtn:active{background:#FFEEEE;color:var(--danger);}
 .tbl-foot{display:grid;grid-template-columns:76px 1fr 58px 76px 28px;align-items:center;padding:9px 12px;background:var(--surface2);border-top:1.5px solid var(--border2);}
@@ -171,8 +171,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 .pc-breakdown{font-size:10px;color:var(--teal);opacity:0.6;margin-top:4px;}
 .pc-bot{padding:9px 14px;display:flex;align-items:center;gap:8px;}
 .pc-lbl{font-size:11px;color:var(--text3);white-space:nowrap;}
-.pc-input{flex:1;min-width:0;padding:5px 8px;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);font-family:'DM Mono',monospace;font-size:14px;color:var(--teal);text-align:right;outline:none;-moz-appearance:textfield;appearance:textfield;}
-.pc-input::-webkit-inner-spin-button,.pc-input::-webkit-outer-spin-button{-webkit-appearance:none;}
+.pc-input{flex:1;min-width:0;padding:5px 8px;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);font-family:'DM Mono',monospace;font-size:14px;color:var(--teal);text-align:right;outline:none;}
 .pc-input:focus{border-color:var(--teal);background:var(--teal-lt);}
 .pc-pct{font-size:12px;color:var(--text3);}
 
@@ -359,7 +358,7 @@ function buildEditorHTML(r,siId){
     ${r.ingredients.map((ing,idx)=>{const pct=parseFloat(ing.pct)||0,g=flourW>0?(pct/100)*flourW:0;return`<div class="ing-row">
       <div class="ic"><select class="sel" onchange="updateIng(${idx},'type',this.value);rerender()">${TYPES.map(t=>`<option${t===ing.type?' selected':''}>${t}</option>`).join('')}</select></div>
       <div class="ic"><input class="itxt" value="${escHtml(ing.name)}" placeholder="재료명" oninput="updateIng(${idx},'name',this.value)"></div>
-      <div class="ic"><input class="ipct" type="text" inputmode="decimal" value="${pct}" onchange="updateIng(${idx},'pct',parseFloat(this.value)||0);rerender()"></div>
+      <div class="ic"><input class="ipct" type="text" inputmode="text" value="${pct}" onchange="updateIng(${idx},'pct',parsePct(this.value));rerender()"></div>
       <div class="ic ig">${Math.round(g).toLocaleString()}</div>
       <div class="ic"><button class="xbtn" onclick="removeIng(${idx})">×</button></div>
     </div>`;}).join('')}
@@ -369,7 +368,7 @@ function buildEditorHTML(r,siId){
   ${poolishIngs.length>0?`<div class="sec-label">사전반죽 정보</div><div class="poolish-grid">${poolishIngs.map(ing=>{
     const hyd=parseFloat(ph[ing.name])||100,totalG=flourW>0?(parseFloat(ing.pct)||0)/100*flourW:0;
     const fi=totalG*100/(100+hyd),wi=totalG*hyd/(100+hyd);
-    return`<div class="pc"><div class="pc-top"><div class="pc-name">${escHtml(ing.name)}</div><div class="pc-total">${Math.round(totalG).toLocaleString()}<span>g</span></div><div class="pc-breakdown">밀 ${Math.round(fi)}g · 물 ${Math.round(wi)}g</div></div><div class="pc-bot"><span class="pc-lbl">수율</span><input class="pc-input" type="text" inputmode="decimal" value="${hyd}" onchange="updatePoolishHyd('${escHtml(ing.name)}',parseFloat(this.value)||100);rerender()"><span class="pc-pct">%</span></div></div>`;
+    return`<div class="pc"><div class="pc-top"><div class="pc-name">${escHtml(ing.name)}</div><div class="pc-total">${Math.round(totalG).toLocaleString()}<span>g</span></div><div class="pc-breakdown">밀 ${Math.round(fi)}g · 물 ${Math.round(wi)}g</div></div><div class="pc-bot"><span class="pc-lbl">수율</span><input class="pc-input" type="text" inputmode="text" value="${hyd}" onchange="updatePoolishHyd('${escHtml(ing.name)}',parsePct(this.value)||100);rerender()"><span class="pc-pct">%</span></div></div>`;
   }).join('')}</div>`:''}`;
 }
 
@@ -393,6 +392,7 @@ function renderAll(){
 }
 
 function rerender(){save();renderAll();}
+function parsePct(v){return parseFloat(String(v).replace(',','.'))||0;}
 function escHtml(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 function updateField(k,v){const r=getCurrent();if(!r)return;r[k]=v;if(k==='name'){const mt=document.getElementById('m-title');if(mt)mt.textContent=v||'레시피';renderList();renderDrawerList();}save();}
 function updateIng(idx,k,v){const r=getCurrent();if(!r)return;r.ingredients[idx][k]=v;save();}
