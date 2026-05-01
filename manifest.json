@@ -1,6 +1,6 @@
 {
-  "name": "Boulangerie 레시피 계산기",
-  "short_name": "Boulangerie",
+  "name": "빵쟁이들",
+  "short_name": "빵쟁이들",
   "description": "제빵 레시피 베이커스 퍼센트 계산기",
   "start_url": "./index.html",
   "scope": "./",
