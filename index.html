@@ -54,6 +54,8 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 .recipe-item.active .recipe-item-name{color:#fff;}
 .recipe-item-meta{font-size:10px;color:rgba(255,255,255,0.28);margin-top:2px;}
 .sidebar-empty{padding:28px 22px;font-size:12px;color:rgba(255,255,255,0.2);text-align:center;line-height:1.7;}
+.sidebar-x-btn{flex-shrink:0;width:24px;height:24px;background:transparent;border:none;border-radius:4px;color:rgba(255,255,255,0.25);font-size:16px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;margin-right:6px;transition:all 0.1s;}
+.sidebar-x-btn:hover{background:rgba(192,57,43,0.3);color:#ff8a80;}
 .sidebar-footer{padding:12px 22px;border-top:1px solid rgba(255,255,255,0.07);font-size:10px;color:rgba(255,255,255,0.18);}
 .d-main{flex:1;overflow-y:auto;padding:36px 42px;background:var(--bg);}
 .d-main::-webkit-scrollbar{width:5px;}
@@ -186,6 +188,23 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 .pc-input:focus{border-color:var(--teal);background:var(--teal-lt);}
 .pc-pct{font-size:12px;color:var(--text3);}
 
+/* ─── SIDEBAR SECTION DIVIDER ─── */
+.sidebar-section-label{padding:14px 22px 4px;font-size:9px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.22);}
+.sidebar-new-pre{margin:6px 16px 0;width:calc(100% - 32px);padding:10px;background:var(--teal);color:#fff;border:none;border-radius:var(--radius);font-family:'Noto Sans KR',sans-serif;font-size:13px;font-weight:500;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px;}
+.sidebar-new-pre:hover{background:#256860;}
+.recipe-item.pre-type{border-left-color:transparent;}
+.recipe-item.pre-type.active{background:rgba(46,125,114,0.22);border-left-color:#4ec9bc;}
+.recipe-item.pre-type .recipe-item-name{color:rgba(255,255,255,0.7);}
+.recipe-item.pre-type.active .recipe-item-name{color:#fff;}
+
+/* pre-dough editor total card */
+.pre-strip{display:flex;background:var(--surface);border:1px solid var(--teal-bd);border-radius:var(--radius-lg);overflow:hidden;margin-bottom:16px;}
+.pre-strip .strip-cell{border-color:var(--teal-bd);}
+.pre-strip .strip-lbl{color:var(--teal);}
+.pre-strip .strip-val{color:var(--teal);}
+.pre-strip .strip-val:focus{color:var(--teal);}
+.pre-strip .strip-unit{color:var(--teal);}
+
 /* desktop overrides */
 @media (min-width:700px){
   .mobile-app{display:none!important;}
@@ -219,9 +238,23 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
       </div>
       <div class="brand-sub">레시피 계산기</div>
     </div>
-    <button class="sidebar-new" onclick="newRecipe()"><span style="font-size:16px;line-height:1">+</span> 새 레시피</button>
-    <input class="sidebar-search" type="text" placeholder="레시피 검색..." oninput="renderList(this.value)">
-    <div class="recipe-list" id="recipe-list"></div>
+    <div style="display:flex;gap:8px;margin:14px 16px 0;">
+      <button class="sidebar-new" style="flex:1;margin:0" onclick="newRecipe()"><span style="font-size:15px;line-height:1">+</span> 새 레시피</button>
+      <button class="sidebar-new-pre" style="flex:1;margin:0" onclick="newPreDough()"><span style="font-size:15px;line-height:1">+</span> 새 사전반죽</button>
+    </div>
+    <div style="display:flex;flex:1;flex-direction:column;overflow:hidden;margin-top:10px;">
+      <!-- 레시피 섹션 -->
+      <div style="flex:1;display:flex;flex-direction:column;overflow:hidden;border-bottom:1px solid rgba(255,255,255,0.07);">
+        <div class="sidebar-section-label" style="padding:8px 22px 4px">레시피</div>
+        <input class="sidebar-search" style="margin:0 16px 6px;width:calc(100% - 32px)" type="text" placeholder="레시피 검색..." oninput="renderList(this.value)">
+        <div class="recipe-list" id="recipe-list" style="flex:1"></div>
+      </div>
+      <!-- 사전반죽 섹션 -->
+      <div style="flex:1;display:flex;flex-direction:column;overflow:hidden;">
+        <div class="sidebar-section-label" style="padding:8px 22px 4px">사전반죽</div>
+        <div class="recipe-list" id="pre-list" style="flex:1"></div>
+      </div>
+    </div>
     <div class="sidebar-footer">데이터는 이 기기에 저장됩니다</div>
   </aside>
   <main class="d-main">
@@ -242,6 +275,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
     <div class="m-title" id="m-title">레시피를 선택하세요</div>
     <button class="m-del-btn" id="m-del-btn" style="display:none" onclick="deleteCurrent()">삭제</button>
     <button class="m-new-btn" onclick="newRecipe()">+ 새로</button>
+    <button class="m-new-btn" id="m-new-pre-btn" style="background:var(--teal);display:none" onclick="newPreDough()">+ 사전반죽</button>
   </div>
 
   <!-- Full-screen editor -->
@@ -255,9 +289,21 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
           <div class="drawer-brand-icon">🌾</div>
           <div class="drawer-brand-name">Boulangerie</div>
         </div>
-        <input class="drawer-search" type="text" placeholder="검색..." oninput="renderDrawerList(this.value)">
+        <div style="display:flex;gap:7px;margin-top:10px;">
+          <button style="flex:1;padding:9px 6px;background:var(--accent);color:#fff;border:none;border-radius:var(--radius);font-family:'Noto Sans KR',sans-serif;font-size:12px;font-weight:500;cursor:pointer;" onclick="newRecipe();closeDrawer()">+ 새 레시피</button>
+          <button style="flex:1;padding:9px 6px;background:var(--teal);color:#fff;border:none;border-radius:var(--radius);font-family:'Noto Sans KR',sans-serif;font-size:12px;font-weight:500;cursor:pointer;" onclick="newPreDough();closeDrawer()">+ 새 사전반죽</button>
+        </div>
       </div>
-      <div class="drawer-list" id="drawer-list"></div>
+      <div style="flex:1;display:flex;flex-direction:column;overflow:hidden;">
+        <div style="flex:1;display:flex;flex-direction:column;overflow:hidden;border-bottom:1px solid rgba(255,255,255,0.07)">
+          <div style="font-size:9px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.22);padding:8px 20px 4px">레시피</div>
+          <div class="drawer-list" id="drawer-list" style="flex:1"></div>
+        </div>
+        <div style="flex:1;display:flex;flex-direction:column;overflow:hidden;">
+          <div style="font-size:9px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.22);padding:8px 20px 4px">사전반죽</div>
+          <div class="drawer-list" id="drawer-pre-list" style="flex:1"></div>
+        </div>
+      </div>
       <div class="drawer-footer">기기에 저장됩니다</div>
     </div>
   </div>
@@ -265,17 +311,25 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 
 <script>
 const TYPES=['밀','수분','사전반죽','소금','기타'];
-let recipes=[],currentId=null,saveTimer=null;
+const PRE_TYPES=['밀','수분','사전반죽'];
+let recipes=[],preDoughs=[],currentId=null,currentPreId=null,currentMode='recipe',saveTimer=null;
 
-function load(){try{recipes=JSON.parse(localStorage.getItem('bakery_recipes')||'[]');}catch(e){recipes=[];}}
+function load(){
+  try{recipes=JSON.parse(localStorage.getItem('bakery_recipes')||'[]');}catch(e){recipes=[];}
+  try{preDoughs=JSON.parse(localStorage.getItem('bakery_predoughs')||'[]');}catch(e){preDoughs=[];}
+}
 function save(){
   localStorage.setItem('bakery_recipes',JSON.stringify(recipes));
+  localStorage.setItem('bakery_predoughs',JSON.stringify(preDoughs));
   ['si-d','si-m'].forEach(id=>{
     const el=document.getElementById(id);
     if(el){el.classList.add('show');clearTimeout(saveTimer);saveTimer=setTimeout(()=>el.classList.remove('show'),1600);}
   });
 }
-function getCurrent(){return recipes.find(r=>r.id===currentId);}
+function getCurrent(){
+  if(currentMode==='recipe')return recipes.find(r=>r.id===currentId)||null;
+  return preDoughs.find(r=>r.id===currentPreId)||null;
+}
 
 /* drawer */
 function openDrawer(){document.getElementById('drawer-overlay').classList.add('open');}
@@ -289,47 +343,99 @@ function newRecipe(){
       {type:'밀',name:'T80',pct:100},{type:'수분',name:'물',pct:80},
       {type:'사전반죽',name:'르방',pct:20},{type:'소금',name:'소금',pct:1.8},{type:'기타',name:'꿀',pct:2}
     ]});
-  save();selectRecipe(id);closeDrawer();
+  currentMode='recipe';currentId=id;save();renderAll();closeDrawer();
+}
+function newPreDough(){
+  const id='pre_'+Date.now().toString();
+  preDoughs.unshift({id,name:'새 사전반죽',targetTotal:900,
+    ingredients:[
+      {type:'밀',name:'밀가루',pct:100},{type:'수분',name:'물',pct:120},{type:'사전반죽',name:'종',pct:100}
+    ]});
+  currentMode='predough';currentPreId=id;save();renderAll();closeDrawer();
 }
 function deleteCurrent(){
-  const r=getCurrent();if(!r)return;
-  if(!confirm('이 레시피를 삭제할까요?'))return;
-  recipes=recipes.filter(x=>x.id!==r.id);
-  currentId=null;save();renderAll();
+  if(currentMode==='recipe'){
+    const r=getCurrent();if(!r)return;
+    if(!confirm('이 레시피를 삭제할까요?'))return;
+    recipes=recipes.filter(x=>x.id!==r.id);currentId=null;
+  } else {
+    const r=getCurrent();if(!r)return;
+    if(!confirm('이 사전반죽을 삭제할까요?'))return;
+    preDoughs=preDoughs.filter(x=>x.id!==r.id);currentPreId=null;
+  }
+  save();renderAll();
 }
 function deleteRecipe(id){
-  if(!confirm('이 레시피를 삭제할까요?'))return;
   recipes=recipes.filter(r=>r.id!==id);
   if(currentId===id)currentId=null;
   save();renderAll();
 }
-function selectRecipe(id){currentId=id;closeDrawer();renderAll();}
+function deletePreDough(id){
+  preDoughs=preDoughs.filter(r=>r.id!==id);
+  if(currentPreId===id)currentPreId=null;
+  save();renderAll();
+}
+function deleteRecipeConfirm(id){
+  if(!confirm('이 레시피를 삭제할까요?'))return;
+  deleteRecipe(id);
+}
+function deletePreDoughConfirm(id){
+  if(!confirm('이 사전반죽을 삭제할까요?'))return;
+  deletePreDough(id);
+}
+function selectRecipe(id){currentMode='recipe';currentId=id;closeDrawer();renderAll();}
+function selectPreDough(id){currentMode='predough';currentPreId=id;closeDrawer();renderAll();}
 
 /* list helpers */
 function recipeItemHTML(r,cls,onclick){
-  return `<div class="${cls}${r.id===currentId?' active':''}" onclick="${onclick}('${r.id}')">
-    <div class="${cls}-name">${escHtml(r.name)||'이름 없음'}</div>
-    <div class="${cls}-meta">${r.weight}g × ${r.count}개 · 재료 ${r.ingredients.length}종</div>
+  return `<div class="${cls}${r.id===currentId&&currentMode==='recipe'?' active':''}" style="display:flex;align-items:center;gap:0" onclick="${onclick}('${r.id}')">
+    <div style="flex:1;min-width:0">
+      <div class="${cls}-name">${escHtml(r.name)||'이름 없음'}</div>
+      <div class="${cls}-meta">${r.weight}g × ${r.count}개 · 재료 ${r.ingredients.length}종</div>
+    </div>
+    <button class="sidebar-x-btn" onclick="event.stopPropagation();deleteRecipe('${r.id}')">×</button>
+  </div>`;
+}
+function preDoughItemHTML(r,cls,onclick){
+  const isActive=r.id===currentPreId&&currentMode==='predough';
+  return `<div class="${cls} pre-type${isActive?' active':''}" style="display:flex;align-items:center;gap:0" onclick="${onclick}('${r.id}')">
+    <div style="flex:1;min-width:0">
+      <div class="${cls}-name">${escHtml(r.name)||'이름 없음'}</div>
+      <div class="${cls}-meta">총량 ${r.targetTotal||0}g · 재료 ${r.ingredients.length}종</div>
+    </div>
+    <button class="sidebar-x-btn" onclick="event.stopPropagation();deletePreDough('${r.id}')">×</button>
   </div>`;
 }
 function renderList(q=''){
   const el=document.getElementById('recipe-list');if(!el)return;
   const list=recipes.filter(r=>r.name.includes(q));
   el.innerHTML=list.length?list.map(r=>recipeItemHTML(r,'recipe-item','selectRecipe')).join(''):'<div class="sidebar-empty">레시피 없음</div>';
+  const pl=document.getElementById('pre-list');if(!pl)return;
+  pl.innerHTML=preDoughs.length?preDoughs.map(r=>preDoughItemHTML(r,'recipe-item','selectPreDough')).join(''):'<div class="sidebar-empty" style="padding:10px 22px;font-size:11px">사전반죽 없음</div>';
 }
 function renderDrawerList(q=''){
   const el=document.getElementById('drawer-list');if(!el)return;
   const list=recipes.filter(r=>r.name.includes(q||''));
-  el.innerHTML=list.length?list.map(r=>`<div class="drawer-item${r.id===currentId?' active':''}" onclick="selectRecipe('${r.id}')">
-    <div class="drawer-item-name">${escHtml(r.name)||'이름 없음'}</div>
-    <div class="drawer-item-meta">${r.weight}g × ${r.count}개 · 재료 ${r.ingredients.length}종</div>
+  el.innerHTML=list.length?list.map(r=>`<div class="drawer-item${r.id===currentId&&currentMode==='recipe'?' active':''}" style="display:flex;align-items:center" onclick="selectRecipe('${r.id}')">
+    <div style="flex:1;min-width:0">
+      <div class="drawer-item-name">${escHtml(r.name)||'이름 없음'}</div>
+      <div class="drawer-item-meta">${r.weight}g × ${r.count}개 · 재료 ${r.ingredients.length}종</div>
+    </div>
+    <button class="sidebar-x-btn" onclick="event.stopPropagation();deleteRecipe('${r.id}')">×</button>
   </div>`).join(''):'<div class="drawer-empty">레시피 없음<br>+ 새로 버튼으로 만들어보세요</div>';
+  const pl=document.getElementById('drawer-pre-list');if(!pl)return;
+  pl.innerHTML=preDoughs.length?preDoughs.map(r=>`<div class="drawer-item pre-type${r.id===currentPreId&&currentMode==='predough'?' active':''}" style="display:flex;align-items:center" onclick="selectPreDough('${r.id}');closeDrawer()">
+    <div style="flex:1;min-width:0">
+      <div class="drawer-item-name">${escHtml(r.name)||'이름 없음'}</div>
+      <div class="drawer-item-meta">총량 ${r.targetTotal||0}g · 재료 ${r.ingredients.length}종</div>
+    </div>
+    <button class="sidebar-x-btn" onclick="event.stopPropagation();deletePreDough('${r.id}')">×</button>
+  </div>`).join(''):'';
 }
 
-/* calc */
+/* ── RECIPE CALC ── */
 function calcFlourWeight(r){
   const tp=r.ingredients.reduce((s,i)=>s+(parseFloat(i.pct)||0),0);
-  // targetDough가 설정되어 있으면 그 값으로 역산, 아니면 개당무게×개수
   const tw=(r.targetDough && r.targetDough>0)
     ? parseFloat(r.targetDough)
     : (parseFloat(r.weight)||0)*(parseInt(r.count)||1);
@@ -348,6 +454,19 @@ function calcStats(r){
   return{flourW,totalPct,totalFlourG:tF,hydration:tF>0?(mW+pW)/tF*100:0,saltPct:tF>0?sG/tF*100:0,totalDough:Math.round(flourW*totalPct/100),poolishIngs};
 }
 
+/* ── PRE-DOUGH CALC ── */
+function calcPreDough(r){
+  const total=parseFloat(r.targetTotal)||0;
+  const sumPct=r.ingredients.reduce((s,i)=>s+(parseFloat(i.pct)||0),0);
+  // 기준 밀가루량 역산: 합산 % 기준
+  const flourBase=sumPct>0?total/(sumPct/100):0;
+  return r.ingredients.map(ing=>{
+    const pct=parseFloat(ing.pct)||0;
+    return{...ing,grams:flourBase>0?Math.round(pct/100*flourBase):0};
+  });
+}
+
+/* ── RECIPE EDITOR ── */
 function buildEditorHTML(r,siId){
   if(!r.poolishHydrations)r.poolishHydrations={};
   if(!r.targetDough)r.targetDough=0;
@@ -356,7 +475,7 @@ function buildEditorHTML(r,siId){
   const calcDough=Math.round((parseFloat(r.weight)||0)*(parseInt(r.count)||1));
   return`<div class="recipe-top">
     <input class="recipe-name-input" value="${escHtml(r.name)}" placeholder="레시피 이름" oninput="updateField('name',this.value)">
-    <button class="delete-btn" onclick="deleteRecipe('${r.id}')">삭제</button>
+    <button class="delete-btn" onclick="deleteRecipeConfirm('${r.id}')">삭제</button>
   </div>
   <div id="${siId}" class="save-badge">✓ 저장됨</div>
   <div class="settings-strip">
@@ -373,11 +492,11 @@ function buildEditorHTML(r,siId){
   <div class="sec-label">재료 목록</div>
   <div class="tbl-wrap">
     <div class="tbl-head"><span>타입</span><span>재료명</span><span>%</span><span>무게(g)</span><span></span></div>
-    ${r.ingredients.map((ing,idx)=>{const pct=parseFloat(ing.pct)||0,g=flourW>0?(pct/100)*flourW:0;return`<div class="ing-row">
+    ${r.ingredients.map((ing,idx)=>{const pct=parseFloat(ing.pct)||0,g=flourW>0?(pct/100)*flourW:0,isSalt=ing.type==='소금';return`<div class="ing-row">
       <div class="ic"><select class="sel" onchange="updateIng(${idx},'type',this.value);rerender()">${TYPES.map(t=>`<option${t===ing.type?' selected':''}>${t}</option>`).join('')}</select></div>
       <div class="ic"><input class="itxt" value="${escHtml(ing.name)}" placeholder="재료명" oninput="updateIng(${idx},'name',this.value)"></div>
-      <div class="ic"><input class="ipct" type="text" inputmode="text" value="${pct}" onchange="updateIng(${idx},'pct',parsePct(this.value));rerender()"></div>
-      <div class="ic ig">${Math.round(g).toLocaleString()}</div>
+      <div class="ic"><input class="ipct" type="text" inputmode="text" value="${isSalt?pct.toFixed(2):pct.toFixed(1)}" onchange="updateIng(${idx},'pct',parsePct(this.value));rerender()"></div>
+      <div class="ic ig">${isSalt?g.toFixed(2):g.toFixed(1)}</div>
       <div class="ic"><button class="xbtn" onclick="removeIng(${idx})">×</button></div>
     </div>`;}).join('')}
     <div class="tbl-foot"><div class="foot-lbl">합계</div><div></div><div class="foot-v">${totalPct.toFixed(1)}</div><div class="foot-v">${totalDough.toLocaleString()}</div><div></div></div>
@@ -390,17 +509,58 @@ function buildEditorHTML(r,siId){
   }).join('')}</div>`:''}`;
 }
 
+/* ── PRE-DOUGH EDITOR ── */
+function buildPreDoughEditorHTML(r,siId){
+  if(!r.targetTotal)r.targetTotal=900;
+  const calced=calcPreDough(r);
+  const totalPct=r.ingredients.reduce((s,i)=>s+(parseFloat(i.pct)||0),0);
+  const totalG=calced.reduce((s,i)=>s+i.grams,0);
+  return`<div class="recipe-top">
+    <input class="recipe-name-input" value="${escHtml(r.name)}" placeholder="사전반죽 이름" oninput="updatePreField('name',this.value)" style="color:var(--teal)">
+    <button class="delete-btn" onclick="deletePreDoughConfirm('${r.id}')">삭제</button>
+  </div>
+  <div id="${siId}" class="save-badge">✓ 저장됨</div>
+  <div class="pre-strip settings-strip">
+    <div class="strip-cell" style="border-left:2px solid var(--teal);background:var(--teal-lt)">
+      <div class="strip-lbl" style="color:var(--teal)">원하는 사전반죽 총량</div>
+      <input class="strip-val" type="text" inputmode="numeric" value="${r.targetTotal>0?r.targetTotal:''}" placeholder="900" onchange="updatePreTotal(this.value)" style="color:var(--teal)">
+      <div class="strip-unit" style="color:var(--teal)">g</div>
+    </div>
+    <div class="strip-cell" style="background:var(--surface2)">
+      <div class="strip-lbl">계산된 총량</div>
+      <input class="strip-val" type="text" value="${totalG.toLocaleString()}" readonly style="color:var(--text3)">
+      <div class="strip-unit">g</div>
+    </div>
+  </div>
+  <div class="sec-label">재료 목록</div>
+  <div class="tbl-wrap">
+    <div class="tbl-head" style="grid-template-columns:76px 1fr 58px 76px 28px">
+      <span>타입</span><span>재료명</span><span>%</span><span>무게(g)</span><span></span>
+    </div>
+    ${r.ingredients.map((ing,idx)=>{const row=calced[idx],pct=parseFloat(ing.pct)||0,g=row.grams||0,isSalt=ing.type==='소금';return`<div class="ing-row" style="grid-template-columns:76px 1fr 58px 76px 28px">
+      <div class="ic"><select class="sel" onchange="updatePreIng(${idx},'type',this.value);rerender()">${PRE_TYPES.map(t=>`<option${t===ing.type?' selected':''}>${t}</option>`).join('')}</select></div>
+      <div class="ic"><input class="itxt" value="${escHtml(ing.name)}" placeholder="재료명" oninput="updatePreIng(${idx},'name',this.value)"></div>
+      <div class="ic"><input class="ipct" type="text" inputmode="text" value="${isSalt?pct.toFixed(2):pct.toFixed(1)}" onchange="updatePreIng(${idx},'pct',parsePct(this.value));rerender()"></div>
+      <div class="ic ig" style="color:var(--teal)">${isSalt?g.toFixed(2):g.toFixed(1)}</div>
+      <div class="ic"><button class="xbtn" onclick="removePreIng(${idx})">×</button></div>
+    </div>`;}).join('')}
+    <div class="tbl-foot" style="grid-template-columns:76px 1fr 58px 76px 28px"><div class="foot-lbl">합계</div><div></div><div class="foot-v" style="color:var(--teal)">${totalPct.toFixed(1)}</div><div class="foot-v" style="color:var(--teal)">${totalG.toLocaleString()}</div><div></div></div>
+  </div>
+  <button class="add-btn" style="border-color:var(--teal-bd);color:var(--teal)" onclick="addPreIng()">+ 재료 추가</button>`;
+}
+
 function renderAll(){
-  const r=getCurrent();
+  const isRecipe=currentMode==='recipe';
+  const r=isRecipe?recipes.find(x=>x.id===currentId):preDoughs.find(x=>x.id===currentPreId);
   /* desktop */
   const empty=document.getElementById('empty-state'),ed=document.getElementById('editor-desktop');
-  if(empty&&ed){if(!r){empty.style.display='flex';ed.style.display='none';}else{empty.style.display='none';ed.style.display='block';ed.innerHTML=buildEditorHTML(r,'si-d');}}
+  if(empty&&ed){if(!r){empty.style.display='flex';ed.style.display='none';}else{empty.style.display='none';ed.style.display='block';ed.innerHTML=isRecipe?buildEditorHTML(r,'si-d'):buildPreDoughEditorHTML(r,'si-d');}}
   renderList();
   /* mobile editor */
   const mob=document.getElementById('editor-mobile');
   if(mob){
     if(!r){mob.innerHTML='<div style="padding:60px 20px;text-align:center;color:var(--text3);font-size:14px;">☰ 버튼으로 레시피를 선택하거나<br><br>+ 새로 버튼으로 만드세요</div>';}
-    else{mob.innerHTML=buildEditorHTML(r,'si-m');}
+    else{mob.innerHTML=isRecipe?buildEditorHTML(r,'si-m'):buildPreDoughEditorHTML(r,'si-m');}
   }
   /* mobile top bar */
   const mt=document.getElementById('m-title'),mdb=document.getElementById('m-del-btn');
@@ -410,14 +570,19 @@ function renderAll(){
 }
 
 function rerender(){save();renderAll();}
-function setTargetDough(v){const r=getCurrent();if(!r)return;r.targetDough=parseFloat(v)||0;rerender();}
+function setTargetDough(v){const r=getCurrent();if(!r||currentMode!=='recipe')return;r.targetDough=parseFloat(v)||0;rerender();}
+function updatePreTotal(v){const r=getCurrent();if(!r||currentMode!=='predough')return;r.targetTotal=parseFloat(v)||0;rerender();}
 function updateFieldAndClear(k,v){const r=getCurrent();if(!r)return;r[k]=v;r.targetDough=0;rerender();}
 function parsePct(v){return parseFloat(String(v).replace(',','.'))||0;}
 function escHtml(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 function updateField(k,v){const r=getCurrent();if(!r)return;r[k]=v;if(k==='name'){const mt=document.getElementById('m-title');if(mt)mt.textContent=v||'레시피';renderList();renderDrawerList();}save();}
+function updatePreField(k,v){const r=getCurrent();if(!r)return;r[k]=v;if(k==='name'){const mt=document.getElementById('m-title');if(mt)mt.textContent=v||'사전반죽';renderList();renderDrawerList();}save();}
 function updateIng(idx,k,v){const r=getCurrent();if(!r)return;r.ingredients[idx][k]=v;save();}
 function removeIng(idx){const r=getCurrent();if(!r)return;r.ingredients.splice(idx,1);save();renderAll();}
-function addIng(){const r=getCurrent();if(!r)return;r.ingredients.push({type:'기타',name:'',pct:0});save();renderAll();setTimeout(()=>{const els=document.querySelectorAll('.itxt');if(els.length)els[els.length-1].focus();},50);}
+function addIng(){const r=getCurrent();if(!r||currentMode!=='recipe')return;r.ingredients.push({type:'기타',name:'',pct:0});save();renderAll();setTimeout(()=>{const els=document.querySelectorAll('.itxt');if(els.length)els[els.length-1].focus();},50);}
+function updatePreIng(idx,k,v){const r=getCurrent();if(!r)return;r.ingredients[idx][k]=v;save();}
+function removePreIng(idx){const r=getCurrent();if(!r)return;r.ingredients.splice(idx,1);save();renderAll();}
+function addPreIng(){const r=getCurrent();if(!r||currentMode!=='predough')return;r.ingredients.push({type:'밀',name:'',pct:0});save();renderAll();setTimeout(()=>{const els=document.querySelectorAll('.itxt');if(els.length)els[els.length-1].focus();},50);}
 function updatePoolishHyd(name,val){const r=getCurrent();if(!r)return;if(!r.poolishHydrations)r.poolishHydrations={};r.poolishHydrations[name]=val;save();}
 
 load();renderAll();
