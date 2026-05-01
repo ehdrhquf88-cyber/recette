@@ -1,4 +1,4 @@
-const CACHE = 'boulangerie-v2';
+const CACHE = 'boulangerie-v3';
 const BASE = self.registration.scope;
 const ASSETS = ['index.html','manifest.json','icon-192.png','icon-512.png'].map(f => BASE + f);
 
