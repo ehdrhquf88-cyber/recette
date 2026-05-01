@@ -505,7 +505,7 @@ function buildEditorHTML(r,siId){
   ${poolishIngs.length>0?`<div class="sec-label">사전반죽 정보</div><div class="poolish-grid">${poolishIngs.map(ing=>{
     const hyd=parseFloat(ph[ing.name])||100,totalG=flourW>0?(parseFloat(ing.pct)||0)/100*flourW:0;
     const fi=totalG*100/(100+hyd),wi=totalG*hyd/(100+hyd);
-    return`<div class="pc"><div class="pc-top"><div class="pc-name">${escHtml(ing.name)}</div><div class="pc-total">${Math.round(totalG).toLocaleString()}<span>g</span></div><div class="pc-breakdown">밀 ${Math.round(fi)}g · 물 ${Math.round(wi)}g</div></div><div class="pc-bot"><span class="pc-lbl">수율</span><input class="pc-input" type="text" inputmode="text" value="${hyd}" onchange="updatePoolishHyd('${escHtml(ing.name)}',parsePct(this.value)||100);rerender()"><span class="pc-pct">%</span></div></div>`;
+    return`<div class="pc"><div class="pc-top"><div class="pc-name">${escHtml(ing.name)}</div><div class="pc-total">${Math.round(totalG).toLocaleString()}<span>g</span></div></div><div class="pc-bot"><span class="pc-lbl">수율</span><input class="pc-input" type="text" inputmode="text" value="${hyd}" onchange="updatePoolishHyd('${escHtml(ing.name)}',parsePct(this.value)||100);rerender()"><span class="pc-pct">%</span></div></div>`;
   }).join('')}</div>`:''}`;
 }
 
