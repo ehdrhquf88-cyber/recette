@@ -155,10 +155,10 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 .metric.m-warm .metric-num{color:var(--warm);}
 .metric-u{font-size:10px;color:var(--text3);margin-left:1px;}
 .tbl-wrap{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;margin-bottom:10px;}
-.tbl-head{display:grid;grid-template-columns:76px 1fr 58px 76px 28px;padding:7px 12px;background:var(--surface2);border-bottom:1px solid var(--border);}
+.tbl-head{display:grid;grid-template-columns:76px 1fr 68px 90px 28px;padding:7px 12px;background:var(--surface2);border-bottom:1px solid var(--border);}
 .tbl-head span{font-size:9px;font-weight:600;letter-spacing:0.07em;text-transform:uppercase;color:var(--text3);padding:0 3px;}
 .tbl-head span:nth-child(3),.tbl-head span:nth-child(4){text-align:right;}
-.ing-row{display:grid;grid-template-columns:76px 1fr 58px 76px 28px;align-items:center;padding:2px 12px;border-bottom:1px solid var(--border);}
+.ing-row{display:grid;grid-template-columns:76px 1fr 68px 90px 28px;align-items:center;padding:2px 12px;border-bottom:1px solid var(--border);}
 .ing-row:last-of-type{border-bottom:none;}
 .ic{padding:0 2px;}
 .sel{width:100%;padding:5px 3px;background:transparent;border:none;border-radius:var(--radius);font-family:'Noto Sans KR',sans-serif;font-size:12px;color:var(--text2);outline:none;cursor:pointer;}
@@ -170,7 +170,7 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 .ig{font-family:'DM Mono',monospace;font-size:18px;font-weight:600;color:var(--text);text-align:right;padding:0 5px;line-height:1;}
 .xbtn{width:26px;height:26px;background:transparent;border:none;border-radius:var(--radius);color:var(--text3);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
 .xbtn:active{background:#FFEEEE;color:var(--danger);}
-.tbl-foot{display:grid;grid-template-columns:76px 1fr 58px 76px 28px;align-items:center;padding:9px 12px;background:var(--surface2);border-top:1.5px solid var(--border2);}
+.tbl-foot{display:grid;grid-template-columns:76px 1fr 68px 90px 28px;align-items:center;padding:9px 12px;background:var(--surface2);border-top:1.5px solid var(--border2);}
 .foot-lbl{font-size:11px;font-weight:600;color:var(--text2);padding:0 3px;}
 .foot-v{font-family:'DM Mono',monospace;font-size:12px;font-weight:500;color:var(--accent);text-align:right;padding:0 5px;}
 .add-btn{width:100%;padding:10px;background:transparent;border:1.5px dashed var(--border2);border-radius:var(--radius-lg);font-family:'Noto Sans KR',sans-serif;font-size:13px;color:var(--text3);cursor:pointer;margin-bottom:20px;}
@@ -205,13 +205,43 @@ input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-
 .pre-strip .strip-val:focus{color:var(--teal);}
 .pre-strip .strip-unit{color:var(--teal);}
 
-/* desktop overrides */
+@media print{
+  body{background:#fff!important;overflow:visible!important;height:auto!important;}
+  .sidebar,.m-topbar,.drawer-overlay,.desktop-app>.sidebar{display:none!important;}
+  .desktop-app{display:block!important;height:auto!important;overflow:visible!important;}
+  .d-main{overflow:visible!important;padding:20px 28px!important;background:#fff!important;}
+  .print-hide{display:none!important;}
+  .tbl-wrap,.metrics,.settings-strip,.poolish-grid,.memo-box{break-inside:avoid;}
+  .recipe-name-input{font-size:22px!important;border:none!important;}
+  .add-btn,.delete-btn,.xbtn,.action-bar{display:none!important;}
+  .ing-row{border-bottom:1px solid #eee!important;}
+  @page{margin:18mm 14mm;}
+}
+
+.action-bar{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap;}
+.action-btn{display:flex;align-items:center;gap:6px;padding:8px 14px;border-radius:var(--radius);border:1px solid var(--border2);background:var(--surface);font-family:'Noto Sans KR',sans-serif;font-size:12px;color:var(--text2);cursor:pointer;transition:all 0.1s;}
+.action-btn:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-lt);}
+.action-btn.teal:hover{border-color:var(--teal);color:var(--teal);background:var(--teal-lt);}
+.batch-row{display:inline-flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--warm);border-radius:var(--radius-lg);padding:6px 10px;margin-bottom:16px;}
+.batch-lbl{font-size:11px;color:var(--text3);white-space:nowrap;}
+.batch-btns{display:flex;gap:6px;}
+.batch-btn{width:32px;height:32px;border:1px solid var(--border2);border-radius:var(--radius);background:var(--surface2);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text2);line-height:1;}
+.batch-btn:active{background:#FFF4E6;border-color:var(--warm);color:var(--warm);}
+.batch-val{font-family:'DM Mono',monospace;font-size:18px;font-weight:600;color:var(--warm);min-width:44px;text-align:center;}
+.batch-reset{font-size:11px;color:var(--text3);cursor:pointer;text-decoration:underline;margin-left:4px;}
+.batch-reset:hover{color:var(--warm);}
+.memo-wrap{margin-top:4px;margin-bottom:24px;}
+.memo-box{width:100%;min-height:80px;padding:12px 14px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);font-family:'Noto Sans KR',sans-serif;font-size:13px;color:var(--text);resize:vertical;outline:none;line-height:1.6;}
+.memo-box:focus{border-color:var(--accent);}
+.memo-box::placeholder{color:var(--text3);}
+.sec-label{font-size:10px;font-weight:600;letter-spacing:0.07em;text-transform:uppercase;color:var(--text3);margin-bottom:8px;}
+
 @media (min-width:700px){
   .mobile-app{display:none!important;}
   .desktop-app{display:flex!important;}
-  .tbl-head{grid-template-columns:88px 1fr 70px 88px 32px;padding:8px 14px;}
-  .ing-row{grid-template-columns:88px 1fr 70px 88px 32px;padding:3px 14px;}
-  .tbl-foot{grid-template-columns:88px 1fr 70px 88px 32px;padding:10px 14px;}
+  .tbl-head{grid-template-columns:88px 1fr 80px 104px 32px;padding:8px 14px;}
+  .ing-row{grid-template-columns:88px 1fr 80px 104px 32px;padding:3px 14px;}
+  .tbl-foot{grid-template-columns:88px 1fr 80px 104px 32px;padding:10px 14px;}
   .foot-v{font-size:13px;}
   .metric-num{font-size:22px;}
   .recipe-name-input{font-size:28px;}
@@ -338,7 +368,7 @@ function closeDrawerIfOutside(e){if(e.target===document.getElementById('drawer-o
 
 function newRecipe(){
   const id=Date.now().toString();
-  recipes.unshift({id,name:'새 레시피',weight:500,count:30,targetDough:0,productNames:[],poolishHydrations:{},
+  recipes.unshift({id,name:'새 레시피',weight:500,count:30,targetDough:0,batchScale:1,memo:'',productNames:[],poolishHydrations:{},
     ingredients:[
       {type:'밀',name:'T80',pct:100},{type:'수분',name:'물',pct:80},
       {type:'사전반죽',name:'르방',pct:20},{type:'소금',name:'소금',pct:1.8},{type:'기타',name:'꿀',pct:2}
@@ -436,10 +466,44 @@ function renderDrawerList(q=''){
 /* ── RECIPE CALC ── */
 function calcFlourWeight(r){
   const tp=r.ingredients.reduce((s,i)=>s+(parseFloat(i.pct)||0),0);
+  const scale=parseFloat(r.batchScale)||1;
+  if(r.targetFlour && r.targetFlour>0) return parseFloat(r.targetFlour);
   const tw=(r.targetDough && r.targetDough>0)
-    ? parseFloat(r.targetDough)
-    : (parseFloat(r.weight)||0)*(parseInt(r.count)||1);
+    ? parseFloat(r.targetDough)*scale
+    : (parseFloat(r.weight)||0)*(parseInt(r.count)||1)*scale;
   return tp>0?tw/(tp/100):0;
+}
+
+/* batch scale helpers */
+function setBatchScale(v){const r=getCurrent();if(!r||currentMode!=='recipe')return;r.batchScale=Math.max(0.1,Math.round(v*10)/10);rerender();}
+function batchUp(){const r=getCurrent();if(!r)return;setBatchScale((parseFloat(r.batchScale)||1)+0.5);}
+function batchDown(){const r=getCurrent();if(!r)return;setBatchScale(Math.max(0.5,(parseFloat(r.batchScale)||1)-0.5));}
+function batchReset(){const r=getCurrent();if(!r)return;r.batchScale=1;rerender();}
+
+/* memo */
+function updateMemo(v){const r=getCurrent();if(!r)return;r.memo=v;save();}
+
+/* PDF print */
+function printRecipe(){window.print();}
+
+/* 레시피 복제 */
+function duplicateRecipe(){
+  const r=getCurrent();if(!r||currentMode!=='recipe')return;
+  const copy=JSON.parse(JSON.stringify(r));
+  copy.id=Date.now().toString();
+  copy.name=r.name+' (복사)';
+  const idx=recipes.findIndex(x=>x.id===r.id);
+  recipes.splice(idx+1,0,copy);
+  currentId=copy.id;
+  save();renderAll();
+}
+
+/* 밀가루 기준 역산 (사전반죽 가루 제외) */
+function setTargetFlour(v){
+  const r=getCurrent();if(!r||currentMode!=='recipe')return;
+  r.targetFlour=parseFloat(v)||0;
+  r.targetDough=0;
+  rerender();
 }
 function calcStats(r){
   const flourW=calcFlourWeight(r);
@@ -470,43 +534,71 @@ function calcPreDough(r){
 function buildEditorHTML(r,siId){
   if(!r.poolishHydrations)r.poolishHydrations={};
   if(!r.targetDough)r.targetDough=0;
+  if(!r.batchScale)r.batchScale=1;
+  if(r.memo===undefined)r.memo='';
+  const scale=parseFloat(r.batchScale)||1;
   const{flourW,totalPct,totalFlourG,hydration,saltPct,totalDough,poolishIngs}=calcStats(r);
   const ph=r.poolishHydrations;
-  const calcDough=Math.round((parseFloat(r.weight)||0)*(parseInt(r.count)||1));
+  const calcDough=Math.round((parseFloat(r.weight)||0)*(parseInt(r.count)||1)*scale);
   return`<div class="recipe-top">
     <input class="recipe-name-input" value="${escHtml(r.name)}" placeholder="레시피 이름" oninput="updateField('name',this.value)">
-    <button class="delete-btn" onclick="deleteRecipeConfirm('${r.id}')">삭제</button>
+    <button class="delete-btn print-hide" onclick="deleteRecipeConfirm('${r.id}')">삭제</button>
   </div>
   <div id="${siId}" class="save-badge">✓ 저장됨</div>
+  <div class="action-bar print-hide">
+    <button class="action-btn" onclick="printRecipe()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>PDF 출력</button>
+    <button class="action-btn" onclick="duplicateRecipe()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>레시피 복제</button>
+  </div>
+  ${scale!==1?`<div class="batch-row">
+    <div class="batch-btns print-hide">
+      <button class="batch-btn" onclick="batchDown()">−</button>
+      <div class="batch-val">×${scale % 1===0?scale.toFixed(0):scale.toFixed(1)}</div>
+      <button class="batch-btn" onclick="batchUp()">+</button>
+    </div>
+    <span class="batch-reset print-hide" onclick="batchReset()">초기화</span>
+    <span style="margin-left:auto;font-size:11px;color:var(--warm)">기준량의 ${scale % 1===0?scale.toFixed(0):scale.toFixed(1)}배 생산</span>
+  </div>`:`<div class="batch-row print-hide">
+    <div class="batch-btns">
+      <button class="batch-btn" onclick="batchDown()">−</button>
+      <div class="batch-val">×1</div>
+      <button class="batch-btn" onclick="batchUp()">+</button>
+    </div>
+  </div>`}
   <div class="settings-strip">
     <div class="strip-cell"><div class="strip-lbl">개당 무게</div><input class="strip-val" type="text" inputmode="numeric" value="${r.weight}" onchange="updateFieldAndClear('weight',parseFloat(this.value)||0)"><div class="strip-unit">g</div></div>
     <div class="strip-cell"><div class="strip-lbl">제품 개수</div><input class="strip-val" type="text" inputmode="numeric" value="${r.count}" onchange="updateFieldAndClear('count',parseInt(this.value)||1)"><div class="strip-unit">개</div></div>
-    <div class="strip-cell" style="background:var(--surface2)"><div class="strip-lbl">계산된 반죽 총량</div><input class="strip-val" type="text" value="${calcDough.toLocaleString()}" readonly style="color:var(--text3)"><div class="strip-unit">g</div></div>
-    <div class="strip-cell" style="border-left:2px solid var(--accent);background:#f0f7f2"><div class="strip-lbl" style="color:var(--accent)">원하는 반죽 총량</div><input class="strip-val" type="text" inputmode="numeric" value="${r.targetDough>0?r.targetDough:''}" placeholder="${calcDough.toLocaleString()}" onchange="setTargetDough(this.value)" style="color:var(--accent)"><div class="strip-unit" style="color:var(--accent)">g</div></div>
-  </div>
-  <div class="metrics">
-    <div class="metric m-green"><div class="metric-bar"></div><div class="metric-lbl">수율 (사전반죽 포함)</div><div class="metric-num">${hydration.toFixed(1)}<span class="metric-u">%</span></div></div>
-    <div class="metric m-warm"><div class="metric-bar"></div><div class="metric-lbl">소금 (사전반죽 포함)</div><div class="metric-num">${saltPct.toFixed(2)}<span class="metric-u">%</span></div></div>
-    <div class="metric"><div class="metric-bar"></div><div class="metric-lbl">총 밀가루 (사전반죽 포함)</div><div class="metric-num">${Math.round(totalFlourG).toLocaleString()}<span class="metric-u">g</span></div></div>
+    <div class="strip-cell" style="background:var(--surface2)"><div class="strip-lbl">계산된 반죽 총량</div><input class="strip-val" type="text" value="${calcDough.toLocaleString()}" readonly style="color:var(--text3)"><div class="strip-unit">g${scale!==1?` <span style="color:var(--warm);font-size:10px">(×${scale % 1===0?scale.toFixed(0):scale.toFixed(1)})</span>`:''}</div></div>
+    <div class="strip-cell print-hide" style="border-left:2px solid var(--accent);background:#f0f7f2"><div class="strip-lbl" style="color:var(--accent)">원하는 반죽 총량</div><input class="strip-val" type="text" inputmode="numeric" value="${r.targetDough>0?r.targetDough:''}" placeholder="${Math.round((parseFloat(r.weight)||0)*(parseInt(r.count)||1)).toLocaleString()}" onchange="setTargetDough(this.value)" style="color:var(--accent)"><div class="strip-unit" style="color:var(--accent)">g</div></div>
+    <div class="strip-cell print-hide" style="border-left:2px solid #8B6914;background:#FFFBF0"><div class="strip-lbl" style="color:#8B6914">본반죽 밀가루 기준</div><input class="strip-val" type="text" inputmode="numeric" value="${r.targetFlour>0?r.targetFlour:''}" placeholder="예) 1000" onchange="setTargetFlour(this.value)" style="color:#8B6914"><div class="strip-unit" style="color:#8B6914">g</div></div>
   </div>
   <div class="sec-label">재료 목록</div>
   <div class="tbl-wrap">
     <div class="tbl-head"><span>타입</span><span>재료명</span><span>%</span><span>무게(g)</span><span></span></div>
     ${r.ingredients.map((ing,idx)=>{const pct=parseFloat(ing.pct)||0,g=flourW>0?(pct/100)*flourW:0,isSalt=ing.type==='소금';return`<div class="ing-row">
-      <div class="ic"><select class="sel" onchange="updateIng(${idx},'type',this.value);rerender()">${TYPES.map(t=>`<option${t===ing.type?' selected':''}>${t}</option>`).join('')}</select></div>
+      <div class="ic"><select class="sel print-hide" onchange="updateIng(${idx},'type',this.value);rerender()">${TYPES.map(t=>`<option${t===ing.type?' selected':''}>${t}</option>`).join('')}</select><span class="print-only" style="display:none;font-size:11px;color:var(--text3)">${ing.type}</span></div>
       <div class="ic"><input class="itxt" value="${escHtml(ing.name)}" placeholder="재료명" oninput="updateIng(${idx},'name',this.value)"></div>
       <div class="ic"><input class="ipct" type="text" inputmode="text" value="${isSalt?pct.toFixed(2):pct.toFixed(1)}" onchange="updateIng(${idx},'pct',parsePct(this.value));rerender()"></div>
       <div class="ic ig">${isSalt?g.toFixed(2):g.toFixed(1)}</div>
-      <div class="ic"><button class="xbtn" onclick="removeIng(${idx})">×</button></div>
+      <div class="ic print-hide"><button class="xbtn" onclick="removeIng(${idx})">×</button></div>
     </div>`;}).join('')}
     <div class="tbl-foot"><div class="foot-lbl">합계</div><div></div><div class="foot-v">${totalPct.toFixed(1)}</div><div class="foot-v">${totalDough.toLocaleString()}</div><div></div></div>
   </div>
-  <button class="add-btn" onclick="addIng()">+ 재료 추가</button>
+  <button class="add-btn print-hide" onclick="addIng()">+ 재료 추가</button>
+  <div class="metrics">
+    <div class="metric m-green"><div class="metric-bar"></div><div class="metric-lbl">수율 (사전반죽 포함)</div><div class="metric-num">${hydration.toFixed(1)}<span class="metric-u">%</span></div></div>
+    <div class="metric m-warm"><div class="metric-bar"></div><div class="metric-lbl">소금 (사전반죽 포함)</div><div class="metric-num">${saltPct.toFixed(2)}<span class="metric-u">%</span></div></div>
+    <div class="metric"><div class="metric-bar"></div><div class="metric-lbl">총 밀가루 (사전반죽 포함)</div><div class="metric-num">${Math.round(totalFlourG).toLocaleString()}<span class="metric-u">g</span></div></div>
+  </div>
   ${poolishIngs.length>0?`<div class="sec-label">사전반죽 정보</div><div class="poolish-grid">${poolishIngs.map(ing=>{
     const hyd=parseFloat(ph[ing.name])||100,totalG=flourW>0?(parseFloat(ing.pct)||0)/100*flourW:0;
     const fi=totalG*100/(100+hyd),wi=totalG*hyd/(100+hyd);
-    return`<div class="pc"><div class="pc-top"><div class="pc-name">${escHtml(ing.name)}</div><div class="pc-total">${Math.round(totalG).toLocaleString()}<span>g</span></div></div><div class="pc-bot"><span class="pc-lbl">수율</span><input class="pc-input" type="text" inputmode="text" value="${hyd}" onchange="updatePoolishHyd('${escHtml(ing.name)}',parsePct(this.value)||100);rerender()"><span class="pc-pct">%</span></div></div>`;
-  }).join('')}</div>`:''}`;
+    return`<div class="pc"><div class="pc-top"><div class="pc-name">${escHtml(ing.name)}</div><div class="pc-total">${Math.round(totalG).toLocaleString()}<span>g</span></div></div><div class="pc-bot"><span class="pc-lbl">수율</span><input class="pc-input print-hide" type="text" inputmode="text" value="${hyd}" onchange="updatePoolishHyd('${escHtml(ing.name)}',parsePct(this.value)||100);rerender()"><span class="pc-pct">${hyd}%</span></div></div>`;
+  }).join('')}</div>`:''}
+  <div class="memo-wrap">
+    <div class="sec-label">메모 / 노트</div>
+    <textarea class="memo-box print-hide" placeholder="발효 시간, 온도, 특이사항 등 자유롭게 기록하세요..." oninput="updateMemo(this.value)">${escHtml(r.memo||'')}</textarea>
+    ${r.memo?`<div style="display:none" class="print-show" style="font-size:13px;line-height:1.6;color:var(--text);white-space:pre-wrap">${escHtml(r.memo)}</div>`:''}
+  </div>`;
 }
 
 /* ── PRE-DOUGH EDITOR ── */
@@ -570,9 +662,9 @@ function renderAll(){
 }
 
 function rerender(){save();renderAll();}
-function setTargetDough(v){const r=getCurrent();if(!r||currentMode!=='recipe')return;r.targetDough=parseFloat(v)||0;rerender();}
+function setTargetDough(v){const r=getCurrent();if(!r||currentMode!=='recipe')return;r.targetDough=parseFloat(v)||0;r.targetFlour=0;rerender();}
 function updatePreTotal(v){const r=getCurrent();if(!r||currentMode!=='predough')return;r.targetTotal=parseFloat(v)||0;rerender();}
-function updateFieldAndClear(k,v){const r=getCurrent();if(!r)return;r[k]=v;r.targetDough=0;rerender();}
+function updateFieldAndClear(k,v){const r=getCurrent();if(!r)return;r[k]=v;r.targetDough=0;r.targetFlour=0;rerender();}
 function parsePct(v){return parseFloat(String(v).replace(',','.'))||0;}
 function escHtml(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 function updateField(k,v){const r=getCurrent();if(!r)return;r[k]=v;if(k==='name'){const mt=document.getElementById('m-title');if(mt)mt.textContent=v||'레시피';renderList();renderDrawerList();}save();}
