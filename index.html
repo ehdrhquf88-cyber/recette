@@ -612,31 +612,26 @@ function buildPreDoughEditorHTML(r,siId){
     <button class="delete-btn" onclick="deletePreDoughConfirm('${r.id}')">삭제</button>
   </div>
   <div id="${siId}" class="save-badge">✓ 저장됨</div>
-  <div class="pre-strip settings-strip">
-    <div class="strip-cell" style="border-left:2px solid var(--teal);background:var(--teal-lt)">
-      <div class="strip-lbl" style="color:var(--teal)">원하는 사전반죽 총량</div>
-      <input class="strip-val" type="text" inputmode="numeric" value="${r.targetTotal>0?r.targetTotal:''}" placeholder="900" onchange="updatePreTotal(this.value)" style="color:var(--teal)">
+  <div class="pre-strip settings-strip" style="display:inline-flex;width:auto;margin-bottom:16px;">
+    <div class="strip-cell" style="border-left:2px solid var(--teal);background:var(--teal-lt);min-width:0;">
+      <div class="strip-lbl" style="color:var(--teal)">사전반죽 총량</div>
+      <input class="strip-val" type="text" inputmode="numeric" value="${r.targetTotal>0?r.targetTotal:''}" placeholder="900" onchange="updatePreTotal(this.value)" style="color:var(--teal);width:80px;">
       <div class="strip-unit" style="color:var(--teal)">g</div>
-    </div>
-    <div class="strip-cell" style="background:var(--surface2)">
-      <div class="strip-lbl">계산된 총량</div>
-      <input class="strip-val" type="text" value="${totalG.toLocaleString()}" readonly style="color:var(--text3)">
-      <div class="strip-unit">g</div>
     </div>
   </div>
   <div class="sec-label">재료 목록</div>
   <div class="tbl-wrap">
-    <div class="tbl-head" style="grid-template-columns:76px 1fr 58px 76px 28px">
+    <div class="tbl-head" style="grid-template-columns:76px 1fr 68px 90px 28px">
       <span>타입</span><span>재료명</span><span>%</span><span>무게(g)</span><span></span>
     </div>
-    ${r.ingredients.map((ing,idx)=>{const row=calced[idx],pct=parseFloat(ing.pct)||0,g=row.grams||0,isSalt=ing.type==='소금';return`<div class="ing-row" style="grid-template-columns:76px 1fr 58px 76px 28px">
+    ${r.ingredients.map((ing,idx)=>{const row=calced[idx],pct=parseFloat(ing.pct)||0,g=row.grams||0,isSalt=ing.type==='소금';return`<div class="ing-row" style="grid-template-columns:76px 1fr 68px 90px 28px">
       <div class="ic"><select class="sel" onchange="updatePreIng(${idx},'type',this.value);rerender()">${PRE_TYPES.map(t=>`<option${t===ing.type?' selected':''}>${t}</option>`).join('')}</select></div>
       <div class="ic"><input class="itxt" value="${escHtml(ing.name)}" placeholder="재료명" oninput="updatePreIng(${idx},'name',this.value)"></div>
       <div class="ic"><input class="ipct" type="text" inputmode="text" value="${isSalt?pct.toFixed(2):pct.toFixed(1)}" onchange="updatePreIng(${idx},'pct',parsePct(this.value));rerender()"></div>
       <div class="ic ig" style="color:var(--teal)">${isSalt?g.toFixed(2):g.toFixed(1)}</div>
       <div class="ic"><button class="xbtn" onclick="removePreIng(${idx})">×</button></div>
     </div>`;}).join('')}
-    <div class="tbl-foot" style="grid-template-columns:76px 1fr 58px 76px 28px"><div class="foot-lbl">합계</div><div></div><div class="foot-v" style="color:var(--teal)">${totalPct.toFixed(1)}</div><div class="foot-v" style="color:var(--teal)">${totalG.toLocaleString()}</div><div></div></div>
+    <div class="tbl-foot" style="grid-template-columns:76px 1fr 68px 90px 28px"><div class="foot-lbl">합계</div><div></div><div class="foot-v" style="color:var(--teal)">${totalPct.toFixed(1)}</div><div class="foot-v" style="color:var(--teal)">${totalG.toLocaleString()}</div><div></div></div>
   </div>
   <button class="add-btn" style="border-color:var(--teal-bd);color:var(--teal)" onclick="addPreIng()">+ 재료 추가</button>`;
 }
